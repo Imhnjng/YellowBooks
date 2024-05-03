@@ -16,7 +16,54 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        window = UIWindow(windowScene: windowScene)
+        
+        let firstViewController = UINavigationController(rootViewController: MainViewController())
+        let SecondViewController = UINavigationController(rootViewController: SearchViewController())
+        let ThirdViewController = UINavigationController(rootViewController: LibraryViewController())
+        
+        let tabBarController = UITabBarController()
+        tabBarController.setViewControllers([firstViewController, SecondViewController, ThirdViewController], animated: true)
+        
+        if let items = tabBarController.tabBar.items {
+            items[0].selectedImage = UIImage(systemName: "house")
+            items[0].image = UIImage(systemName: "house")
+            items[0].title = "Home"
+            
+            items[1].selectedImage = UIImage(systemName: "doc.text.magnifyingglass")
+            items[1].image = UIImage(systemName: "doc.text.magnifyingglass")
+            items[1].title = "Search"
+            
+            items[2].selectedImage = UIImage(systemName: "books.vertical")
+            items[2].image = UIImage(systemName: "books.vertical")
+            items[2].title = "Library"
+        }
+        
+        let tabBarAppearance = UITabBarAppearance()
+        tabBarAppearance.backgroundColor = .white
+        tabBarAppearance.stackedLayoutAppearance.normal.iconColor = UIColor.ybgray
+        tabBarAppearance.stackedLayoutAppearance.normal.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.ybgray]
+        tabBarAppearance.stackedLayoutAppearance.selected.iconColor = UIColor.ybyellow
+        tabBarAppearance.stackedLayoutAppearance.selected.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.ybyellow]
+        UITabBar.appearance().standardAppearance = tabBarAppearance
+        if #available(iOS 15.0, *) {
+            UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
+        }
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithDefaultBackground() // 반투명한 그림자를 백그라운드 앞에다 생성 (반투명한 그림자를 한겹을 쌓는다)
+//        appearance.configureWithOpaqueBackground() // 불투명한 색상의 백그라운드 생성 (불투명한 그림자를 한겹을 쌓는다)
+//        appearance.configureWithTransparentBackground() // 그림자 제거하고 기존의 백그라운드 색상을 사용 (그림자를 제거하고 기존 배경색을 사용)
+                                                        // 👉 참고로 그림자를 제거하면 네비게이션 바 아래의 선을 제거할 수 있다.
+       
+        UINavigationBar.appearance().standardAppearance = appearance // 기본 내비게이션 바 (위로 스크롤 할 때 백그라운드 그림자 생성)
+        
+        
+        
+        window?.rootViewController = tabBarController
+        window?.makeKeyAndVisible()
+        
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
