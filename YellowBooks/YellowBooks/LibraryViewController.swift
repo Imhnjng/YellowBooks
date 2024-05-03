@@ -9,6 +9,9 @@ import UIKit
 
 class LibraryViewController: UIViewController {
 
+    let likesLabel = UILabel()
+    let likesTableView = UITableView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
