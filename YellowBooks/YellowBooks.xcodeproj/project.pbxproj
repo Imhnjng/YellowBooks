@@ -16,6 +16,8 @@
 		3C65AC5A2BE49B0800324D36 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 3C65AC592BE49B0800324D36 /* Base */; };
 		3C65AC632BE49EFA00324D36 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C65AC622BE49EFA00324D36 /* SearchViewController.swift */; };
 		3C65AC652BE49F4900324D36 /* LibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C65AC642BE49F4900324D36 /* LibraryViewController.swift */; };
+		3C65AC682BE4BAEE00324D36 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3C65AC672BE4BAEE00324D36 /* SnapKit */; };
+		3C65AC6A2BE4DBFC00324D36 /* AllBookListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C65AC692BE4DBFC00324D36 /* AllBookListCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,7 @@
 		3C65AC5B2BE49B0800324D36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3C65AC622BE49EFA00324D36 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		3C65AC642BE49F4900324D36 /* LibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewController.swift; sourceTree = "<group>"; };
+		3C65AC692BE4DBFC00324D36 /* AllBookListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllBookListCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C65AC682BE4BAEE00324D36 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +69,7 @@
 				3C65AC4A2BE49B0600324D36 /* AppDelegate.swift */,
 				3C65AC4C2BE49B0600324D36 /* SceneDelegate.swift */,
 				3C65AC4E2BE49B0600324D36 /* MainViewController.swift */,
+				3C65AC692BE4DBFC00324D36 /* AllBookListCollectionViewCell.swift */,
 				3C65AC622BE49EFA00324D36 /* SearchViewController.swift */,
 				3C65AC642BE49F4900324D36 /* LibraryViewController.swift */,
 				3C65AC502BE49B0600324D36 /* Main.storyboard */,
@@ -92,6 +97,9 @@
 			dependencies = (
 			);
 			name = YellowBooks;
+			packageProductDependencies = (
+				3C65AC672BE4BAEE00324D36 /* SnapKit */,
+			);
 			productName = YellowBooks;
 			productReference = 3C65AC472BE49B0600324D36 /* YellowBooks.app */;
 			productType = "com.apple.product-type.application";
@@ -120,6 +128,9 @@
 				Base,
 			);
 			mainGroup = 3C65AC3E2BE49B0600324D36;
+			packageReferences = (
+				3C65AC662BE4BAEE00324D36 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = 3C65AC482BE49B0600324D36 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -153,6 +164,7 @@
 				3C65AC552BE49B0600324D36 /* YellowBooks.xcdatamodeld in Sources */,
 				3C65AC652BE49F4900324D36 /* LibraryViewController.swift in Sources */,
 				3C65AC4D2BE49B0600324D36 /* SceneDelegate.swift in Sources */,
+				3C65AC6A2BE4DBFC00324D36 /* AllBookListCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -385,6 +397,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3C65AC662BE4BAEE00324D36 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3C65AC672BE4BAEE00324D36 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3C65AC662BE4BAEE00324D36 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		3C65AC532BE49B0600324D36 /* YellowBooks.xcdatamodeld */ = {
