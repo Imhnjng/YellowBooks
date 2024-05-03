@@ -71,9 +71,9 @@ class MainViewController: UIViewController {
         }
         
         searchImage.snp.makeConstraints {
-            $0.top.leading.equalToSuperview().offset(10)
-            $0.bottom.equalToSuperview().offset(-10)
-            $0.height.width.equalTo(30)
+            $0.top.leading.equalToSuperview().offset(14)
+            $0.bottom.equalToSuperview().offset(-14)
+            $0.height.width.equalTo(22)
         }
         
         allListLabel.snp.makeConstraints {
@@ -93,7 +93,7 @@ class MainViewController: UIViewController {
         searchBarView.layer.borderWidth = 2
         searchBarView.layer.borderColor = UIColor.ybgray.cgColor
         searchBarView.tintColor = .ybgray
-        
+        searchImage.tintColor = .systemGray
         searchBarView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(goToSearchView(_:))))
         
         allListLabel.text = "All Books"

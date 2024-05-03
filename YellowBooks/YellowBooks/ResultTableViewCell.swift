@@ -17,7 +17,16 @@ class ResultTableViewCell: UITableViewCell {
 //    let salePercent = UILabel()
     let salePrice = UILabel()
     lazy var stackView = UIStackView(arrangedSubviews: [title, author, salePrice])
-    let likeButton = UIButton()
+//    let likeButton = UIButton()
+    let likeButton: UIButton = {
+        let button = UIButton()
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 25, weight: .light)
+        let image = UIImage(systemName: "heart", withConfiguration: imageConfig)
+        
+        button.setImage(image, for: .normal)
+        button.tintColor = .gray
+        return button
+    }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -54,7 +63,7 @@ class ResultTableViewCell: UITableViewCell {
         likeButton.snp.makeConstraints {
 //            $0.leading.equalTo(stackView.snp.trailing).offset(10)
             $0.trailing.equalToSuperview().offset(-5)
-            $0.height.width.equalTo(50)
+//            $0.height.width.equalTo(50)
             $0.centerY.equalTo(stackView.snp.centerY)
         }
     }
@@ -81,8 +90,7 @@ class ResultTableViewCell: UITableViewCell {
         stackView.spacing = 1
 //        stackView.distribution = .fillEqually
         stackView.alignment = .fill
-        
-        likeButton.setImage(UIImage(systemName: "heart.circle.fill"), for: .normal)
+ 
         
     }
     

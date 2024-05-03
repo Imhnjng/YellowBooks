@@ -59,7 +59,7 @@ class SearchViewController: UIViewController {
         
         searchResultLabel.text = "Search Result"
         
-        tableView.backgroundColor = .red
+        tableView.backgroundColor = .systemBackground
         tableView.register(ResultTableViewCell.self, forCellReuseIdentifier: ResultTableViewCell.identifier)
     }
     
@@ -76,7 +76,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ResultTableViewCell.identifier, for: indexPath) as? ResultTableViewCell else { return ResultTableViewCell() }
-        
+        cell.selectionStyle = .none
         return cell
     }
     
