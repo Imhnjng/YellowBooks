@@ -91,7 +91,7 @@ class MainViewController: UIViewController {
         searchBarView.backgroundColor = .systemBackground
         searchBarView.layer.cornerRadius = 7
         searchBarView.layer.borderWidth = 2
-        searchBarView.layer.borderColor = UIColor.gray.cgColor
+        searchBarView.layer.borderColor = UIColor.ybgray.cgColor
         searchBarView.tintColor = .ybgray
         
         searchBarView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(goToSearchView(_:))))
