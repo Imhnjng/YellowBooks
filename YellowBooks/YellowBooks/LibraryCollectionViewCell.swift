@@ -62,7 +62,7 @@ class LibraryCollectionViewCell: UICollectionViewCell {
             $0.trailing.bottom.equalToSuperview().inset(8)
         }
         
-        image.backgroundColor = .yellow
+        image.backgroundColor = .blue
         
         title.text = "title title title title title"
         title.numberOfLines = 2
