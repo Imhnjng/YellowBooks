@@ -11,6 +11,16 @@ import SnapKit
 class DetailViewController: UIViewController {
     
     let bottomBar = UIView()
+    let addButton = UIButton()
+    let likeButton: UIButton = {
+        let button = UIButton()
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 25, weight: .light)
+        let image = UIImage(systemName: "heart", withConfiguration: imageConfig)
+        
+        button.setImage(image, for: .normal)
+        button.tintColor = .gray
+        return button
+    }()
     let backgroundThumbnail: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -53,9 +63,11 @@ class DetailViewController: UIViewController {
     func setupConstraints() {
         
         view.addSubview(bottomBar)
+        bottomBar.addSubview(likeButton)
+        bottomBar.addSubview(addButton)
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
-        scrollView.addSubview(backgroundThumbnail)
+        contentView.addSubview(backgroundThumbnail)
         contentView.addSubview(thumnailImage)
         contentView.addSubview(infoBackgroundView)
         infoBackgroundView.addSubview(booktitleLabel)
@@ -71,7 +83,18 @@ class DetailViewController: UIViewController {
         
         bottomBar.snp.makeConstraints {
             $0.leading.trailing.bottom.equalToSuperview()
-            $0.height.equalTo(70)
+            $0.height.equalTo(80)
+        }
+        
+        likeButton.snp.makeConstraints {
+            $0.top.leading.bottom.equalToSuperview().inset(10)
+            $0.width.equalTo(60)
+        }
+        
+        addButton.snp.makeConstraints {
+            $0.centerY.equalTo(likeButton.snp.centerY)
+            $0.leading.equalTo(likeButton.snp.trailing).offset(5)
+            $0.top.bottom.trailing.equalToSuperview().inset(10)
         }
         
         scrollView.snp.makeConstraints {
@@ -80,17 +103,18 @@ class DetailViewController: UIViewController {
         }
         
         contentView.snp.makeConstraints {
+            $0.width.equalToSuperview()
             $0.edges.equalToSuperview()
         }
         
         backgroundThumbnail.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
-            $0.height.equalTo(contentView.snp.height).multipliedBy(0.5)
+            $0.height.equalTo(view.snp.height).multipliedBy(0.5)
         }
         
         thumnailImage.snp.makeConstraints {
             $0.centerX.equalTo(backgroundThumbnail.snp.centerX)
-            $0.top.equalToSuperview().offset(100)
+            $0.top.equalToSuperview().offset(50)
             $0.width.equalTo(contentView.snp.width).multipliedBy(0.5)
 //            $0.height.equalTo(thumnailImage.snp.width).multipliedBy(1.4)
             $0.height.equalTo(300)
@@ -101,12 +125,56 @@ class DetailViewController: UIViewController {
             $0.leading.bottom.trailing.equalToSuperview()
             $0.height.equalTo(700)
         }
+        
+        booktitleLabel.snp.makeConstraints {
+            $0.top.equalTo(infoBackgroundView.snp.top).offset(20)
+            $0.leading.equalToSuperview().offset(16)
+        }
+        
+//        contentLabel.snp.makeConstraints {
+//            $0.top.equalTo(booktitleLabel.snp.bottom).offset(10)
+//            $0.leading.equalToSuperview().offset(16)
+//        }
+        
+        authorLabel.snp.makeConstraints {
+            $0.top.equalTo(booktitleLabel.snp.bottom).offset(10)
+            $0.leading.equalToSuperview().offset(16)
+        }
+        
+        translatorLabel.snp.makeConstraints {
+            $0.centerY.equalTo(authorLabel.snp.centerY)
+            $0.leading.equalTo(authorLabel.snp.trailing).offset(5)
+        }
+        
+        publisherLabel.snp.makeConstraints {
+            $0.top.equalTo(authorLabel.snp.bottom).offset(10)
+            $0.leading.equalToSuperview().offset(16)
+        }
+        
+        datetimeLabel.snp.makeConstraints {
+            $0.centerY.equalTo(publisherLabel.snp.centerY)
+            $0.leading.equalTo(publisherLabel.snp.trailing).offset(5)
+        }
+        
+//        isbnLabel
+        
+        salePriceLabel.snp.makeConstraints {
+            $0.top.equalTo(publisherLabel.snp.bottom).offset(10)
+            $0.leading.equalToSuperview().offset(16)
+        }
+        
+        priceLabel.snp.makeConstraints {
+            $0.centerY.equalTo(salePriceLabel.snp.centerY)
+            $0.leading.equalTo(salePriceLabel.snp.trailing).offset(5)
+        }
+        
     }
     
     func configureUI() {
         backgroundThumbnail.backgroundColor = .red
         
         bottomBar.backgroundColor = .orange
+        addButton.backgroundColor = .ybgray
         
         scrollView.backgroundColor = .yellow
         
@@ -115,6 +183,39 @@ class DetailViewController: UIViewController {
         thumnailImage.backgroundColor = .blue
         
         infoBackgroundView.backgroundColor = .purple
+        infoBackgroundView.layer.cornerRadius = 15
+        
+        
+        booktitleLabel.text = "title title title title title"
+        booktitleLabel.font = .systemFont(ofSize: 25, weight: .heavy)
+        booktitleLabel.textColor = .black
+        
+//        contentLabel
+        authorLabel.text = "저자"
+        authorLabel.font = .systemFont(ofSize: 17, weight: .medium)
+        authorLabel.textColor = .black
+        
+        translatorLabel.text = "번역가"
+        translatorLabel.font = .systemFont(ofSize: 17, weight: .medium)
+        translatorLabel.textColor = .black
+        
+        publisherLabel.text = "출판사"
+        publisherLabel.font = .systemFont(ofSize: 15, weight: .light)
+        publisherLabel.textColor = .lightGray
+        
+        datetimeLabel.text = "0000년 00월 00일"
+        datetimeLabel.font = .systemFont(ofSize: 15, weight: .light)
+        datetimeLabel.textColor = .lightGray
+        
+//        isbnLabel
+
+        salePriceLabel.text = "000000원"
+        salePriceLabel.font = .systemFont(ofSize: 20, weight: .heavy)
+        salePriceLabel.textColor = .black
+        
+        priceLabel.text = "00000원"
+        priceLabel.font = .systemFont(ofSize: 10, weight: .medium)
+        priceLabel.textColor = .lightGray
     }
     
 
