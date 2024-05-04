@@ -61,7 +61,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         
         
-        window?.rootViewController = tabBarController
+//        window?.rootViewController = tabBarController
+        window?.rootViewController = DetailViewController()
         window?.makeKeyAndVisible()
         
     }

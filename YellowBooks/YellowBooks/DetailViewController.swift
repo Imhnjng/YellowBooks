@@ -6,9 +6,11 @@
 //
 
 import UIKit
+import SnapKit
 
 class DetailViewController: UIViewController {
     
+    let bottomBar = UIView()
     let backgroundThumbnail: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -25,6 +27,8 @@ class DetailViewController: UIViewController {
         return imageView
     }()
     
+    let scrollView = UIScrollView()
+    let contentView = UIView()
     let thumnailImage = UIImageView()
     let infoBackgroundView = UIView()
     var booktitleLabel = UILabel()
@@ -47,9 +51,13 @@ class DetailViewController: UIViewController {
     }
     
     func setupConstraints() {
-        view.addSubview(backgroundThumbnail)
-        view.addSubview(thumnailImage)
-        view.addSubview(infoBackgroundView)
+        
+        view.addSubview(bottomBar)
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        scrollView.addSubview(backgroundThumbnail)
+        contentView.addSubview(thumnailImage)
+        contentView.addSubview(infoBackgroundView)
         infoBackgroundView.addSubview(booktitleLabel)
         infoBackgroundView.addSubview(contentLabel)
         infoBackgroundView.addSubview(authorLabel)
@@ -59,10 +67,54 @@ class DetailViewController: UIViewController {
         infoBackgroundView.addSubview(isbnLabel)
         infoBackgroundView.addSubview(priceLabel)
         infoBackgroundView.addSubview(salePriceLabel)
+        
+        
+        bottomBar.snp.makeConstraints {
+            $0.leading.trailing.bottom.equalToSuperview()
+            $0.height.equalTo(70)
+        }
+        
+        scrollView.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
+            $0.bottom.equalTo(bottomBar.snp.top)
+        }
+        
+        contentView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
+        backgroundThumbnail.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
+            $0.height.equalTo(contentView.snp.height).multipliedBy(0.5)
+        }
+        
+        thumnailImage.snp.makeConstraints {
+            $0.centerX.equalTo(backgroundThumbnail.snp.centerX)
+            $0.top.equalToSuperview().offset(100)
+            $0.width.equalTo(contentView.snp.width).multipliedBy(0.5)
+//            $0.height.equalTo(thumnailImage.snp.width).multipliedBy(1.4)
+            $0.height.equalTo(300)
+        }
+        
+        infoBackgroundView.snp.makeConstraints {
+            $0.top.equalTo(backgroundThumbnail.snp.bottom).inset(20)
+            $0.leading.bottom.trailing.equalToSuperview()
+            $0.height.equalTo(700)
+        }
     }
     
     func configureUI() {
+        backgroundThumbnail.backgroundColor = .red
         
+        bottomBar.backgroundColor = .orange
+        
+        scrollView.backgroundColor = .yellow
+        
+        contentView.backgroundColor = .green
+        
+        thumnailImage.backgroundColor = .blue
+        
+        infoBackgroundView.backgroundColor = .purple
     }
     
 
