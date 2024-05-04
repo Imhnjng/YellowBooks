@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C5E83652BE5E61800C540A9 /* LibraryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C5E83642BE5E61800C540A9 /* LibraryCollectionViewCell.swift */; };
 		3C65AC4B2BE49B0600324D36 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C65AC4A2BE49B0600324D36 /* AppDelegate.swift */; };
 		3C65AC4D2BE49B0600324D36 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C65AC4C2BE49B0600324D36 /* SceneDelegate.swift */; };
 		3C65AC4F2BE49B0600324D36 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C65AC4E2BE49B0600324D36 /* MainViewController.swift */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3C5E83642BE5E61800C540A9 /* LibraryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryCollectionViewCell.swift; sourceTree = "<group>"; };
 		3C65AC472BE49B0600324D36 /* YellowBooks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YellowBooks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C65AC4A2BE49B0600324D36 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3C65AC4C2BE49B0600324D36 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -75,6 +77,7 @@
 				3C65AC622BE49EFA00324D36 /* SearchViewController.swift */,
 				3C65AC6D2BE500FE00324D36 /* ResultTableViewCell.swift */,
 				3C65AC642BE49F4900324D36 /* LibraryViewController.swift */,
+				3C5E83642BE5E61800C540A9 /* LibraryCollectionViewCell.swift */,
 				3C65AC502BE49B0600324D36 /* Main.storyboard */,
 				3C65AC562BE49B0800324D36 /* Assets.xcassets */,
 				3C65AC582BE49B0800324D36 /* LaunchScreen.storyboard */,
@@ -162,6 +165,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C65AC632BE49EFA00324D36 /* SearchViewController.swift in Sources */,
+				3C5E83652BE5E61800C540A9 /* LibraryCollectionViewCell.swift in Sources */,
 				3C65AC4F2BE49B0600324D36 /* MainViewController.swift in Sources */,
 				3C65AC4B2BE49B0600324D36 /* AppDelegate.swift in Sources */,
 				3C65AC552BE49B0600324D36 /* YellowBooks.xcdatamodeld in Sources */,

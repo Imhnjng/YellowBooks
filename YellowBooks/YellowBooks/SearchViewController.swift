@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 class SearchViewController: UIViewController {
-
+    let brandLogoImage = UIImageView(image: UIImage(named: "brandLogo"))
     let searchBar = UISearchBar()
     let searchResultLabel = UILabel()
     let tableView = UITableView()
@@ -26,9 +26,16 @@ class SearchViewController: UIViewController {
     
     
     func setupConstraints() {
+        view.addSubview(brandLogoImage)
         view.addSubview(searchBar)
         view.addSubview(searchResultLabel)
         view.addSubview(tableView)
+        
+        brandLogoImage.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(16)
+            $0.bottom.equalTo(searchBar.snp.top).offset(-10)
+            $0.height.width.equalTo(30)
+        }
         
         searchBar.snp.makeConstraints {
             $0.top.equalToSuperview().offset(90)

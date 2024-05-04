@@ -9,13 +9,10 @@ import UIKit
 import SnapKit
 
 class MainViewController: UIViewController {
-
-    
-
     let brandLogoImage = UIImageView(image: UIImage(named: "brandLogo"))
     let searchBarView = UIView()
     let searchImage = UIImageView(image: UIImage(systemName: "magnifyingglass"))
-//    let searchBarButton = UIButton()
+    //    let searchBarButton = UIButton()
     let allListLabel = UILabel()
     let allBookListColletionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -30,8 +27,6 @@ class MainViewController: UIViewController {
         let inset: CGFloat = 16 // 추가로 적용한 가로 inset
         
         let cellWidth = (deviceWidth - spacing * (countForLine - 1) - inset * 2 - 1)/countForLine
-        // -1을 해준 이유는 float의 경우 나눗셈에서 0.33이 되지만 이게 3개가 모였을 때 부동소숫점 문제가 발생해서 근사치로 계산했습니다.
-        // floor 를 통해 내림처리 해주는 방법도 있습니다!!
         
         layout.itemSize = .init(width: cellWidth, height: cellWidth * 1.5)
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -108,7 +103,7 @@ class MainViewController: UIViewController {
         print("clicked searchVIew")
         
     }
-
+    
 }
 
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -119,7 +114,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = allBookListColletionView.dequeueReusableCell(withReuseIdentifier: AllBookListCollectionViewCell.identifier, for: indexPath) as? AllBookListCollectionViewCell else { return AllBookListCollectionViewCell() }
         
-//        cell.layer.cornerRadius = 6
+        //        cell.layer.cornerRadius = 6
         return cell
     }
     
