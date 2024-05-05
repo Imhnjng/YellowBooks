@@ -37,6 +37,7 @@ class LibraryCollectionViewCell: UICollectionViewCell {
     }
     
     func setupUI() {
+        contentView.backgroundColor = .white
         contentView.addSubview(image)
         contentView.addSubview(title)
         contentView.addSubview(author)
@@ -66,12 +67,12 @@ class LibraryCollectionViewCell: UICollectionViewCell {
         
         title.text = "title title title title title"
         title.numberOfLines = 2
-        title.textColor = .white
+        title.textColor = .ybblack
         title.font = .systemFont(ofSize: 13, weight: .medium)
         
         author.text = "author"
         author.numberOfLines = 1
-        author.textColor = .systemGray
+        author.textColor = .gray
         author.font = .systemFont(ofSize: 12, weight: .light)
     }
     

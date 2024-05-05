@@ -36,7 +36,7 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .white
         
         allBookListColletionView.dataSource = self
         allBookListColletionView.delegate = self
@@ -83,7 +83,7 @@ class MainViewController: UIViewController {
     }
     
     func configureUI() {
-        searchBarView.backgroundColor = .systemBackground
+        searchBarView.backgroundColor = .white
         searchBarView.layer.cornerRadius = 7
         searchBarView.layer.borderWidth = 2
         searchBarView.layer.borderColor = UIColor.ybgray.cgColor
@@ -116,6 +116,21 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         //        cell.layer.cornerRadius = 6
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+       
+//        let selectedMovie = popularMovies[indexPath.row]
+        let detailVC = DetailViewController()
+//        detailViewController.movie = selectedMovie  // 영화 정보 전달
+
+        let navigationController = UINavigationController(rootViewController: detailVC)
+
+        // 모달 뷰 전체 화면으로 설정
+        navigationController.modalPresentationStyle = .fullScreen
+
+        // 현재 뷰 컨트롤러에서 모달 방식으로 네비게이션 컨트롤러 표시
+        present(navigationController, animated: true)
     }
     
 }

@@ -76,6 +76,9 @@
 		3C65AC492BE49B0600324D36 /* YellowBooks */ = {
 			isa = PBXGroup;
 			children = (
+				3C65AC5B2BE49B0800324D36 /* Info.plist */,
+				3C65AC532BE49B0600324D36 /* YellowBooks.xcdatamodeld */,
+				3C65AC562BE49B0800324D36 /* Assets.xcassets */,
 				3C65AC4A2BE49B0600324D36 /* AppDelegate.swift */,
 				3C65AC4C2BE49B0600324D36 /* SceneDelegate.swift */,
 				3C5E83682BE60B6100C540A9 /* Model.swift */,
@@ -88,10 +91,7 @@
 				3C5E83642BE5E61800C540A9 /* LibraryCollectionViewCell.swift */,
 				3C5E83662BE5F99700C540A9 /* DetailViewController.swift */,
 				3C65AC502BE49B0600324D36 /* Main.storyboard */,
-				3C65AC562BE49B0800324D36 /* Assets.xcassets */,
 				3C65AC582BE49B0800324D36 /* LaunchScreen.storyboard */,
-				3C65AC5B2BE49B0800324D36 /* Info.plist */,
-				3C65AC532BE49B0600324D36 /* YellowBooks.xcdatamodeld */,
 			);
 			path = YellowBooks;
 			sourceTree = "<group>";

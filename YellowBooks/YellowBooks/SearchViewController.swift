@@ -14,11 +14,14 @@ class SearchViewController: UIViewController {
     let searchResultLabel = UILabel()
     let tableView = UITableView()
     
+    var searchBookDocuments: [Document] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .white
         tableView.delegate = self
         tableView.dataSource = self
+        searchBar.delegate = self
         
         setupConstraints()
         configureUI()
@@ -57,33 +60,57 @@ class SearchViewController: UIViewController {
     
     func configureUI() {
         searchBar.placeholder = "Search"
-        searchBar.barTintColor = .systemBackground
+        searchBar.barTintColor = .white
         searchBar.layer.cornerRadius = 7
         searchBar.layer.borderWidth = 2
         searchBar.layer.borderColor = UIColor.ybgray.cgColor
         searchBar.backgroundImage = UIImage() //구분선 제거
-        searchBar.searchTextField.backgroundColor = .systemBackground
+        searchBar.searchTextField.backgroundColor = .white
         
         searchResultLabel.text = "Search Result"
-        
-        tableView.backgroundColor = .systemBackground
+        searchResultLabel.textColor = .ybblack
+        tableView.backgroundColor = .white
         tableView.register(ResultTableViewCell.self, forCellReuseIdentifier: ResultTableViewCell.identifier)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
+        print("touchesBegan")
         self.view.endEditing(true)
     }
 
+    func searchBook(keyword: String) {
+        print("searchBook \(keyword)")
+        // api 통신
+        BookManager.shared.fetchBookData(withQuery: keyword, targets: [.title, .person]) { [weak self] success, response in
+            if success, let response = response {
+                print("response: \(response)")
+                
+                // 결과값 모델
+                self?.searchBookDocuments = response.documents
+                
+                // 테이블뷰 리로드
+                self?.tableView.reloadData()
+            }
+            else {
+                // TODO: error UI
+                
+            }
+        }
+    }
 }
 
-extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
+extension SearchViewController: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        10
+        searchBookDocuments.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ResultTableViewCell.identifier, for: indexPath) as? ResultTableViewCell else { return ResultTableViewCell() }
+        
+        let item = searchBookDocuments[indexPath.row]
         cell.selectionStyle = .none
+        cell.updateData(item)
+//        cell.title.text = item.title
         return cell
     }
     
@@ -91,4 +118,18 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         return 120
     }
     
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        print("scrollViewWillBeginDragging")
+        self.view.endEditing(true)
+    }
+}
+
+extension SearchViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let text = searchBar.text else { return }
+        
+        searchBar.resignFirstResponder()
+        
+        self.searchBook(keyword: text)
+    }
 }

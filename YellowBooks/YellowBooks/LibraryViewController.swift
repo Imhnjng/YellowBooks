@@ -33,7 +33,7 @@ class LibraryViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .white
         libraryCollectionView.delegate = self
         libraryCollectionView.dataSource = self
         
@@ -70,7 +70,7 @@ class LibraryViewController: UIViewController {
         myLibraryLabel.textColor = .ybblack
         myLibraryLabel.font = .systemFont(ofSize: 20, weight: .heavy)
         
-        libraryCollectionView.backgroundColor = .systemBackground
+        libraryCollectionView.backgroundColor = .white
         libraryCollectionView.register(LibraryCollectionViewCell.self, forCellWithReuseIdentifier: LibraryCollectionViewCell.identifier)
     }
 }

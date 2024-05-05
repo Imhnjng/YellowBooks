@@ -69,6 +69,7 @@ class ResultTableViewCell: UITableViewCell {
     }
     
     func configureUI() {
+        contentView.backgroundColor = .white
         image.backgroundColor = .gray
         image.layer.cornerRadius = 6
         
@@ -78,7 +79,7 @@ class ResultTableViewCell: UITableViewCell {
         title.font = .systemFont(ofSize: 17, weight: .medium)
         
         author.text = "Jerry Jerry Jerry"
-        author.textColor = .systemGray
+        author.textColor = .gray
         author.numberOfLines = 1
         author.font = .systemFont(ofSize: 15, weight: .light)
         
@@ -92,6 +93,11 @@ class ResultTableViewCell: UITableViewCell {
         stackView.alignment = .fill
  
         
+    }
+    
+    func updateData(_ data: Document) {
+        title.text = data.title
+        author.text = data.authors.joined(separator: ", ")
     }
     
     

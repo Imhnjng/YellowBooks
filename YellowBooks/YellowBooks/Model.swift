@@ -7,8 +7,8 @@
 
 import Foundation
 
-// MARK: - Welcome
-struct Welcome: Codable {
+// MARK: - SearchBookResponse
+struct SearchBookResponse: Codable {
     let documents: [Document]
     let meta: Meta
 }
@@ -23,7 +23,7 @@ struct Document: Codable {
     let status: String
     let thumbnail: String
     let title: String
-    let translators: String
+    let translators: [String]
     let url: String
 
     enum CodingKeys: String, CodingKey {

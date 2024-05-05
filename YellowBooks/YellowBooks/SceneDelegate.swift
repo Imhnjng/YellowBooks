@@ -41,7 +41,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         
         let tabBarAppearance = UITabBarAppearance()
-        tabBarAppearance.backgroundColor = .systemBackground
+        tabBarAppearance.backgroundColor = .white
         tabBarAppearance.stackedLayoutAppearance.normal.iconColor = UIColor.ybgray
         tabBarAppearance.stackedLayoutAppearance.normal.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.ybgray]
         tabBarAppearance.stackedLayoutAppearance.selected.iconColor = UIColor.ybyellow
@@ -61,8 +61,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         
         
-//        window?.rootViewController = tabBarController
-        window?.rootViewController = DetailViewController()
+        window?.rootViewController = tabBarController
+//        window?.rootViewController = DetailViewController()
         window?.makeKeyAndVisible()
         
     }
