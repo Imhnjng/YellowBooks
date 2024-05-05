@@ -27,6 +27,7 @@ class BookManager {
 //            URLQueryItem(name: "target", value: "title"),
             URLQueryItem(name: "query", value: query),
         ]
+        // target 값 있을시 실행
         if !targets.isEmpty {
             let target = targets.compactMap { x in x.rawValue }.joined(separator: ",")
 //            print("target: \(target)")
@@ -45,6 +46,7 @@ class BookManager {
         request.setValue("KakaoAK \(apiKey)", forHTTPHeaderField: "Authorization")
         
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            //에러처리
             if let error = error {
                 print("Error \(error)")
                 DispatchQueue.main.async {

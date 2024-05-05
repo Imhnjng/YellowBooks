@@ -47,6 +47,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         tabBarAppearance.stackedLayoutAppearance.selected.iconColor = UIColor.ybyellow
         tabBarAppearance.stackedLayoutAppearance.selected.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.ybyellow]
         UITabBar.appearance().standardAppearance = tabBarAppearance
+        
+        //탭 바가 스크롤 가능한 경우에 나타나는 외관을 설정
         if #available(iOS 15.0, *) {
             UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
         }

@@ -83,7 +83,7 @@ class SearchViewController: UIViewController {
         // api 통신
         BookManager.shared.fetchBookData(withQuery: keyword, targets: [.title, .person]) { [weak self] success, response in
             if success, let response = response {
-                print("response: \(response)")
+//                print("response: \(response)")
                 
                 // 결과값 모델
                 self?.searchBookDocuments = response.documents
@@ -118,6 +118,20 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource, UISc
         return 120
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectBook = searchBookDocuments[indexPath.row]
+        let detailVC = DetailViewController()
+        let navigationController = UINavigationController(rootViewController: detailVC)
+
+        // 모달 뷰 전체 화면으로 설정
+//        navigationController.modalPresentationStyle = .none
+
+        // 현재 뷰 컨트롤러에서 모달 방식으로 네비게이션 컨트롤러 표시
+        present(navigationController, animated: true)
+        
+    }
+    
+    // 키보드외 터치 헀을 때 키보드 내려감
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         print("scrollViewWillBeginDragging")
         self.view.endEditing(true)

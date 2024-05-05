@@ -62,7 +62,7 @@ class ResultTableViewCell: UITableViewCell {
         
         likeButton.snp.makeConstraints {
 //            $0.leading.equalTo(stackView.snp.trailing).offset(10)
-            $0.trailing.equalToSuperview().offset(-5)
+            $0.trailing.equalToSuperview().offset(-16)
 //            $0.height.width.equalTo(50)
             $0.centerY.equalTo(stackView.snp.centerY)
         }
@@ -83,6 +83,9 @@ class ResultTableViewCell: UITableViewCell {
         author.numberOfLines = 1
         author.font = .systemFont(ofSize: 15, weight: .light)
         
+//        stackView.spacing = 5
+        stackView.distribution = .fill
+        
         salePrice.text = "0000 원"
         salePrice.textColor = .ybblack
         salePrice.font = .systemFont(ofSize: 15, weight: .regular)
@@ -98,6 +101,8 @@ class ResultTableViewCell: UITableViewCell {
     func updateData(_ data: Document) {
         title.text = data.title
         author.text = data.authors.joined(separator: ", ")
+        salePrice.text = String((data.salePrice).formatted(.currency(code: "KRW")))
+        image.loadFromURL(data.thumbnail)
     }
     
     
@@ -116,4 +121,19 @@ class ResultTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
+}
+
+extension UIImageView {
+    func loadFromURL(_ urlString: String) {
+        guard let url = URL(string: urlString) else { return }
+        DispatchQueue.global().async { [weak self] in
+            if let data = try? Data(contentsOf: url) {
+                if let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        self?.image = image
+                    }
+                }
+            }
+        }
+    }
 }
