@@ -7,8 +7,15 @@
 
 import UIKit
 import SnapKit
+import CoreData
 
 class LibraryViewController: UIViewController {
+    //
+    var persistentContainer: NSPersistentContainer? {
+        (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer
+    }
+    var bookList: [Book] = []
+    
     let brandLogoImage = UIImageView(image: UIImage(named: "brandLogo"))
     let myLibraryLabel = UILabel()
    
@@ -36,11 +43,24 @@ class LibraryViewController: UIViewController {
         view.backgroundColor = .white
         libraryCollectionView.delegate = self
         libraryCollectionView.dataSource = self
+        setBookList()
         
         setupConstraints()
         configureUI()
+        
     }
     
+    // MARK: CoreData에서 상품 정보를 불러와, bookList 변수에 저장
+    private func setBookList() {
+        print("setBookList - bookList: \(bookList)")
+        guard let context = self.persistentContainer?.viewContext else { return }
+    
+        let request = Book.fetchRequest()
+    
+        if let bookList = try? context.fetch(request) {
+            self.bookList = bookList
+        }
+    }
     
     func setupConstraints() {
         view.addSubview(brandLogoImage)
@@ -73,15 +93,19 @@ class LibraryViewController: UIViewController {
         libraryCollectionView.backgroundColor = .white
         libraryCollectionView.register(LibraryCollectionViewCell.self, forCellWithReuseIdentifier: LibraryCollectionViewCell.identifier)
     }
+    
+    
 }
 
 extension LibraryViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        20
+        return bookList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = libraryCollectionView.dequeueReusableCell(withReuseIdentifier: LibraryCollectionViewCell.identifier, for: indexPath) as? LibraryCollectionViewCell else { return LibraryCollectionViewCell() }
+        
+        let bookList = bookList[indexPath.item]
         
         return cell
     }

@@ -7,8 +7,14 @@
 
 import UIKit
 import SnapKit
+import CoreData
 
 class DetailViewController: UIViewController {
+    
+    //
+    var persistentContainer: NSPersistentContainer? {
+        (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer
+    }
     
     let bottomBar = UIView()
     let addButton = UIButton()
@@ -16,9 +22,9 @@ class DetailViewController: UIViewController {
         let button = UIButton()
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 25, weight: .light)
         let image = UIImage(systemName: "heart", withConfiguration: imageConfig)
-        
-        button.setImage(image, for: .normal)
         button.tintColor = .gray
+        button.setImage(image, for: .normal)
+        
         return button
     }()
     let backgroundThumbnail: UIImageView = {
@@ -27,7 +33,7 @@ class DetailViewController: UIViewController {
         imageView.clipsToBounds = true
         imageView.backgroundColor = .gray
         //이미지에 블러 넣기
-        let blurEffect = UIBlurEffect(style: .light)
+        let blurEffect = UIBlurEffect(style: .dark)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = imageView.bounds
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -53,7 +59,7 @@ class DetailViewController: UIViewController {
     var contentLabel = UILabel()
     var content = UILabel()
     
-    var book: Document? {
+    var selectBook: Document? {
         didSet {
             DispatchQueue.main.async {
                 self.loadData()
@@ -191,9 +197,6 @@ class DetailViewController: UIViewController {
     func configureUI() {
         backgroundThumbnail.backgroundColor = .red
         
-        bottomBar.backgroundColor = .white
-        addButton.backgroundColor = .ybgray
-        
         scrollView.backgroundColor = .yellow
         
         contentView.backgroundColor = .white
@@ -244,11 +247,34 @@ class DetailViewController: UIViewController {
         contentLabel.font = .systemFont(ofSize: 17, weight: .medium)
         contentLabel.textColor = .black
         contentLabel.numberOfLines = 0
+        
+        bottomBar.backgroundColor = .white
+        addButton.backgroundColor = .ybgray
+        addButton.setTitle("담기", for: .normal)
+        addButton.layer.cornerRadius = 6
+        addButton.addTarget(self, action: #selector(saveAddBook), for: .touchUpInside)
+    }
+    
+    // MARK: Core Data 에 저장
+    @objc func saveAddBook() {
+        print("coreData 저장")
+        guard let context = self.persistentContainer?.viewContext else { return }
+
+        guard let selectBook = self.selectBook else { return }
+
+        let addBook = Book(context: context)
+
+        addBook.title = selectBook.title
+        addBook.salePrice = Int32(selectBook.salePrice)
+        addBook.thumbnail = selectBook.thumbnail
+//        addBook.author = selectBook.authors
+        
+        try? context.save()
     }
     
     // MARK: load data
     func loadData() {
-        guard let book = book else { return }
+        guard let book = selectBook else { return }
         backgroundThumbnail.loadFromURL(book.thumbnail)
         thumnailImage.loadFromURL(book.thumbnail)
         booktitleLabel.text = book.title
@@ -264,19 +290,4 @@ class DetailViewController: UIViewController {
     }
     
 }
-
-//extension UIImageView {
-//    func loadFromURL(_ urlString: String) {
-//        guard let url = URL(string: urlString) else { return }
-//        DispatchQueue.global().async { [weak self] in
-//            if let data = try? Data(contentsOf: url) {
-//                if let image = UIImage(data: data) {
-//                    DispatchQueue.main.async {
-//                        self?.image = image
-//                    }
-//                }
-//            }
-//        }
-//    }
-//}
 

@@ -122,7 +122,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource, UISc
         let selectBook = searchBookDocuments[indexPath.row]
         
         let detailVC = DetailViewController()
-        detailVC.book = selectBook
+        detailVC.selectBook = selectBook
         let navigationController = UINavigationController(rootViewController: detailVC)
 
         // 모달 뷰 전체 화면으로 설정
