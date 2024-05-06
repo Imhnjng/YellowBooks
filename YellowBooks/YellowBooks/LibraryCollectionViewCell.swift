@@ -13,7 +13,8 @@ class LibraryCollectionViewCell: UICollectionViewCell {
     
     let image = UIImageView()
     let title = UILabel()
-    let author = UILabel()
+//    let author = UILabel()
+    let salePrice = UILabel()
     let likeButton: UIButton = {
         let button = UIButton()
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 20, weight: .light)
@@ -36,11 +37,19 @@ class LibraryCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func updateData(_ data: Book) {
+        title.text = data.title
+//        author.text = data.authors.joined(separator: ", ")
+        salePrice.text = String((data.salePrice).formatted(.currency(code: "KRW")))
+        image.loadFromURL(data.thumbnail ?? "")
+    }
+    
     func setupUI() {
         contentView.backgroundColor = .white
         contentView.addSubview(image)
         contentView.addSubview(title)
-        contentView.addSubview(author)
+//        contentView.addSubview(author)
+        contentView.addSubview(salePrice)
         image.addSubview(likeButton)
         
         image.snp.makeConstraints {
@@ -53,15 +62,15 @@ class LibraryCollectionViewCell: UICollectionViewCell {
             $0.horizontalEdges.equalToSuperview()
         }
         
-        author.snp.makeConstraints {
+        salePrice.snp.makeConstraints {
             $0.top.equalTo(title.snp.bottom).offset(2)
             $0.horizontalEdges.equalToSuperview()
             $0.bottom.equalToSuperview()
         }
         
-        likeButton.snp.makeConstraints {
-            $0.trailing.bottom.equalToSuperview().inset(8)
-        }
+//        likeButton.snp.makeConstraints {
+//            $0.trailing.bottom.equalToSuperview().inset(8)
+//        }
         
         image.backgroundColor = .blue
         
@@ -70,10 +79,10 @@ class LibraryCollectionViewCell: UICollectionViewCell {
         title.textColor = .ybblack
         title.font = .systemFont(ofSize: 13, weight: .medium)
         
-        author.text = "author"
-        author.numberOfLines = 1
-        author.textColor = .gray
-        author.font = .systemFont(ofSize: 12, weight: .light)
+        salePrice.text = "salePrice"
+        salePrice.numberOfLines = 1
+        salePrice.textColor = .ybblack
+        salePrice.font = .systemFont(ofSize: 12, weight: .light)
     }
     
 }

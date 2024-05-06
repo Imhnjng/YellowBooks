@@ -106,6 +106,7 @@ extension LibraryViewController: UICollectionViewDelegate, UICollectionViewDataS
         guard let cell = libraryCollectionView.dequeueReusableCell(withReuseIdentifier: LibraryCollectionViewCell.identifier, for: indexPath) as? LibraryCollectionViewCell else { return LibraryCollectionViewCell() }
         
         let bookList = bookList[indexPath.item]
+        cell.updateData(bookList)
         
         return cell
     }
