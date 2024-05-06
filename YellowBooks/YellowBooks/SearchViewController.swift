@@ -120,7 +120,9 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource, UISc
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectBook = searchBookDocuments[indexPath.row]
+        
         let detailVC = DetailViewController()
+        detailVC.book = selectBook
         let navigationController = UINavigationController(rootViewController: detailVC)
 
         // 모달 뷰 전체 화면으로 설정

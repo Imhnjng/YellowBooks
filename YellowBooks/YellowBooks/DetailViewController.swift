@@ -52,6 +52,14 @@ class DetailViewController: UIViewController {
     var priceLabel = UILabel()
     var salePriceLabel = UILabel()
     
+    var book: Document? {
+        didSet {
+            DispatchQueue.main.async {
+                self.loadData()
+            }
+//            self.loadData()
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -103,8 +111,9 @@ class DetailViewController: UIViewController {
         }
         
         contentView.snp.makeConstraints {
+            $0.top.leading.trailing.bottom.equalToSuperview()
             $0.width.equalToSuperview()
-            $0.edges.equalToSuperview()
+//            $0.edges.equalToSuperview()
         }
         
         backgroundThumbnail.snp.makeConstraints {
@@ -128,7 +137,7 @@ class DetailViewController: UIViewController {
         
         booktitleLabel.snp.makeConstraints {
             $0.top.equalTo(infoBackgroundView.snp.top).offset(20)
-            $0.leading.equalToSuperview().offset(16)
+            $0.leading.trailing.equalToSuperview().inset(16)
         }
         
 //        contentLabel.snp.makeConstraints {
@@ -138,7 +147,7 @@ class DetailViewController: UIViewController {
         
         authorLabel.snp.makeConstraints {
             $0.top.equalTo(booktitleLabel.snp.bottom).offset(10)
-            $0.leading.equalToSuperview().offset(16)
+            $0.leading.trailing.equalToSuperview().inset(16)
         }
         
         translatorLabel.snp.makeConstraints {
@@ -173,22 +182,23 @@ class DetailViewController: UIViewController {
     func configureUI() {
         backgroundThumbnail.backgroundColor = .red
         
-        bottomBar.backgroundColor = .orange
+        bottomBar.backgroundColor = .white
         addButton.backgroundColor = .ybgray
         
         scrollView.backgroundColor = .yellow
         
-        contentView.backgroundColor = .green
+        contentView.backgroundColor = .white
         
         thumnailImage.backgroundColor = .blue
         
-        infoBackgroundView.backgroundColor = .purple
+        infoBackgroundView.backgroundColor = .white
         infoBackgroundView.layer.cornerRadius = 15
         
         
         booktitleLabel.text = "title title title title title"
         booktitleLabel.font = .systemFont(ofSize: 25, weight: .heavy)
         booktitleLabel.textColor = .black
+        booktitleLabel.numberOfLines = 2
         
 //        contentLabel
         authorLabel.text = "저자"
@@ -218,5 +228,35 @@ class DetailViewController: UIViewController {
         priceLabel.textColor = .lightGray
     }
     
-
+    // MARK: load data
+    func loadData() {
+        guard let book = book else { return }
+        booktitleLabel.text = book.title
+//        print("booktitleLabel.text: \(booktitleLabel.text) , book.title: \(book.title)")
+        authorLabel.text = book.authors.joined(separator: ", ")
+        translatorLabel.text = book.translators.joined(separator: ", ")
+        publisherLabel.text = book.publisher
+        datetimeLabel.text = book.datetime
+        salePriceLabel.text = String((book.salePrice).formatted(.currency(code: "KRW")))
+        priceLabel.text = String(book.price.formatted(.currency(code: "KRW")))
+        backgroundThumbnail.loadFromURL(book.thumbnail)
+        thumnailImage.loadFromURL(book.thumbnail)
+    }
+    
 }
+
+//extension UIImageView {
+//    func loadFromURL(_ urlString: String) {
+//        guard let url = URL(string: urlString) else { return }
+//        DispatchQueue.global().async { [weak self] in
+//            if let data = try? Data(contentsOf: url) {
+//                if let image = UIImage(data: data) {
+//                    DispatchQueue.main.async {
+//                        self?.image = image
+//                    }
+//                }
+//            }
+//        }
+//    }
+//}
+
