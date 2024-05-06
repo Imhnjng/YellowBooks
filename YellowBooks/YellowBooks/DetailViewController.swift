@@ -42,7 +42,6 @@ class DetailViewController: UIViewController {
     let thumnailImage = UIImageView()
     let infoBackgroundView = UIView()
     var booktitleLabel = UILabel()
-    var contentLabel = UILabel()
     var authorLabel = UILabel()
     var translatorLabel = UILabel()
     var publisherLabel = UILabel()
@@ -51,6 +50,8 @@ class DetailViewController: UIViewController {
 //    var salePercent = UILabel()
     var priceLabel = UILabel()
     var salePriceLabel = UILabel()
+    var contentLabel = UILabel()
+    var content = UILabel()
     
     var book: Document? {
         didSet {
@@ -79,7 +80,6 @@ class DetailViewController: UIViewController {
         contentView.addSubview(thumnailImage)
         contentView.addSubview(infoBackgroundView)
         infoBackgroundView.addSubview(booktitleLabel)
-        infoBackgroundView.addSubview(contentLabel)
         infoBackgroundView.addSubview(authorLabel)
         infoBackgroundView.addSubview(translatorLabel)
         infoBackgroundView.addSubview(publisherLabel)
@@ -87,6 +87,8 @@ class DetailViewController: UIViewController {
         infoBackgroundView.addSubview(isbnLabel)
         infoBackgroundView.addSubview(priceLabel)
         infoBackgroundView.addSubview(salePriceLabel)
+        infoBackgroundView.addSubview(content)
+        infoBackgroundView.addSubview(contentLabel)
         
         
         bottomBar.snp.makeConstraints {
@@ -132,18 +134,13 @@ class DetailViewController: UIViewController {
         infoBackgroundView.snp.makeConstraints {
             $0.top.equalTo(backgroundThumbnail.snp.bottom).inset(20)
             $0.leading.bottom.trailing.equalToSuperview()
-            $0.height.equalTo(700)
+//            $0.height.equalTo(700)
         }
         
         booktitleLabel.snp.makeConstraints {
             $0.top.equalTo(infoBackgroundView.snp.top).offset(20)
             $0.leading.trailing.equalToSuperview().inset(16)
         }
-        
-//        contentLabel.snp.makeConstraints {
-//            $0.top.equalTo(booktitleLabel.snp.bottom).offset(10)
-//            $0.leading.equalToSuperview().offset(16)
-//        }
         
         authorLabel.snp.makeConstraints {
             $0.top.equalTo(booktitleLabel.snp.bottom).offset(10)
@@ -175,6 +172,18 @@ class DetailViewController: UIViewController {
         priceLabel.snp.makeConstraints {
             $0.centerY.equalTo(salePriceLabel.snp.centerY)
             $0.leading.equalTo(salePriceLabel.snp.trailing).offset(5)
+            
+        }
+        
+        content.snp.makeConstraints {
+            $0.top.equalTo(salePriceLabel.snp.bottom).offset(10)
+            $0.leading.equalToSuperview().offset(16)
+        }
+        
+        contentLabel.snp.makeConstraints {
+            $0.top.equalTo(content.snp.bottom).offset(10)
+            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.bottom.equalToSuperview().inset(10)
         }
         
     }
@@ -226,11 +235,22 @@ class DetailViewController: UIViewController {
         priceLabel.text = "00000원"
         priceLabel.font = .systemFont(ofSize: 10, weight: .medium)
         priceLabel.textColor = .lightGray
+        
+        content.text = "책소개"
+        content.font = .systemFont(ofSize: 25, weight: .heavy)
+        content.textColor = .black
+        
+        contentLabel.text = "이 책은 영국에서부터..."
+        contentLabel.font = .systemFont(ofSize: 17, weight: .medium)
+        contentLabel.textColor = .black
+        contentLabel.numberOfLines = 0
     }
     
     // MARK: load data
     func loadData() {
         guard let book = book else { return }
+        backgroundThumbnail.loadFromURL(book.thumbnail)
+        thumnailImage.loadFromURL(book.thumbnail)
         booktitleLabel.text = book.title
 //        print("booktitleLabel.text: \(booktitleLabel.text) , book.title: \(book.title)")
         authorLabel.text = book.authors.joined(separator: ", ")
@@ -239,8 +259,8 @@ class DetailViewController: UIViewController {
         datetimeLabel.text = book.datetime
         salePriceLabel.text = String((book.salePrice).formatted(.currency(code: "KRW")))
         priceLabel.text = String(book.price.formatted(.currency(code: "KRW")))
-        backgroundThumbnail.loadFromURL(book.thumbnail)
-        thumnailImage.loadFromURL(book.thumbnail)
+        contentLabel.text = book.contents
+        
     }
     
 }
