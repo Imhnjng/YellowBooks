@@ -259,17 +259,14 @@ class DetailViewController: UIViewController {
     @objc func saveAddBook() {
         print("coreData 저장")
         guard let context = self.persistentContainer?.viewContext else { return }
-
         guard let selectBook = self.selectBook else { return }
-
         let addBook = Book(context: context)
-
         addBook.title = selectBook.title
         addBook.salePrice = Int32(selectBook.salePrice)
         addBook.thumbnail = selectBook.thumbnail
 //        addBook.author = selectBook.authors
-        
         try? context.save()
+        self.dismiss(animated: true, completion: nil) // 이전 화면으로 이동
     }
     
     // MARK: load data

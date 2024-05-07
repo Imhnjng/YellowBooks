@@ -18,15 +18,15 @@ class ResultTableViewCell: UITableViewCell {
     let salePrice = UILabel()
     lazy var stackView = UIStackView(arrangedSubviews: [title, author, salePrice])
 //    let likeButton = UIButton()
-    let likeButton: UIButton = {
-        let button = UIButton()
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: 25, weight: .light)
-        let image = UIImage(systemName: "heart", withConfiguration: imageConfig)
-        
-        button.setImage(image, for: .normal)
-        button.tintColor = .gray
-        return button
-    }()
+//    let likeButton: UIButton = {
+//        let button = UIButton()
+//        let imageConfig = UIImage.SymbolConfiguration(pointSize: 25, weight: .light)
+//        let image = UIImage(systemName: "heart", withConfiguration: imageConfig)
+//        
+//        button.setImage(image, for: .normal)
+//        button.tintColor = .gray
+//        return button
+//    }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -41,8 +41,8 @@ class ResultTableViewCell: UITableViewCell {
     func setupConstraints() {
         contentView.addSubview(image)
         contentView.addSubview(stackView)
-        contentView.addSubview(likeButton)
-        
+//        contentView.addSubview(likeButton)
+//        
 //        contentView.snp.makeConstraints {
 //            $0.height.equalTo(90)
 //        }
@@ -57,15 +57,15 @@ class ResultTableViewCell: UITableViewCell {
         stackView.snp.makeConstraints {
             $0.leading.equalTo(image.snp.trailing).offset(10)
             $0.centerY.equalTo(image.snp.centerY)
-            $0.trailing.equalTo(likeButton.snp.leading).offset(-10)
+            $0.trailing.equalToSuperview().offset(-16)
         }
         
-        likeButton.snp.makeConstraints {
-//            $0.leading.equalTo(stackView.snp.trailing).offset(10)
-            $0.trailing.equalToSuperview().offset(-16)
-//            $0.height.width.equalTo(50)
-            $0.centerY.equalTo(stackView.snp.centerY)
-        }
+//        likeButton.snp.makeConstraints {
+////            $0.leading.equalTo(stackView.snp.trailing).offset(10)
+//            $0.trailing.equalToSuperview().offset(-16)
+////            $0.height.width.equalTo(50)
+//            $0.centerY.equalTo(stackView.snp.centerY)
+//        }
     }
     
     func configureUI() {

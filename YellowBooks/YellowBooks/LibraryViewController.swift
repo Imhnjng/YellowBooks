@@ -50,16 +50,21 @@ class LibraryViewController: UIViewController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print(#function)
+        setBookList()
+    }
+    
+    
     // MARK: CoreData에서 상품 정보를 불러와, bookList 변수에 저장
     private func setBookList() {
-        print("setBookList - bookList: \(bookList)")
         guard let context = self.persistentContainer?.viewContext else { return }
-    
         let request = Book.fetchRequest()
-    
         if let bookList = try? context.fetch(request) {
             self.bookList = bookList
         }
+        libraryCollectionView.reloadData()
     }
     
     func setupConstraints() {
@@ -108,6 +113,7 @@ extension LibraryViewController: UICollectionViewDelegate, UICollectionViewDataS
         let bookList = bookList[indexPath.item]
         cell.updateData(bookList)
         
+//        libraryCollectionView.reloadData()
         return cell
     }
     
