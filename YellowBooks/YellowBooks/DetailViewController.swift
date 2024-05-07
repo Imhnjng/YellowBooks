@@ -18,10 +18,10 @@ class DetailViewController: UIViewController {
     
     let bottomBar = UIView()
     let addButton = UIButton()
-    let likeButton: UIButton = {
+    let closeButton: UIButton = {
         let button = UIButton()
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: 25, weight: .light)
-        let image = UIImage(systemName: "heart", withConfiguration: imageConfig)
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 40, weight: .light)
+        let image = UIImage(systemName: "xmark.square.fill", withConfiguration: imageConfig)
         button.tintColor = .gray
         button.setImage(image, for: .normal)
         
@@ -64,7 +64,6 @@ class DetailViewController: UIViewController {
             DispatchQueue.main.async {
                 self.loadData()
             }
-//            self.loadData()
         }
     }
 
@@ -78,7 +77,7 @@ class DetailViewController: UIViewController {
     func setupConstraints() {
        
         view.addSubview(bottomBar)
-        bottomBar.addSubview(likeButton)
+        bottomBar.addSubview(closeButton)
         bottomBar.addSubview(addButton)
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
@@ -102,14 +101,14 @@ class DetailViewController: UIViewController {
             $0.height.equalTo(80)
         }
         
-        likeButton.snp.makeConstraints {
+        closeButton.snp.makeConstraints {
             $0.top.leading.bottom.equalToSuperview().inset(10)
             $0.width.equalTo(60)
         }
         
         addButton.snp.makeConstraints {
-            $0.centerY.equalTo(likeButton.snp.centerY)
-            $0.leading.equalTo(likeButton.snp.trailing).offset(5)
+            $0.centerY.equalTo(closeButton.snp.centerY)
+            $0.leading.equalTo(closeButton.snp.trailing).offset(5)
             $0.top.bottom.trailing.equalToSuperview().inset(10)
         }
         
@@ -119,9 +118,11 @@ class DetailViewController: UIViewController {
         }
         
         contentView.snp.makeConstraints {
-            $0.top.leading.trailing.bottom.equalToSuperview()
+//            $0.top.leading.trailing.bottom.equalToSuperview()
             $0.width.equalToSuperview()
-//            $0.edges.equalToSuperview()
+            $0.top.leading.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview()
+//            $0.bottom.equalTo(bottomBar.snp.top)
         }
         
         backgroundThumbnail.snp.makeConstraints {
@@ -150,7 +151,7 @@ class DetailViewController: UIViewController {
         
         authorLabel.snp.makeConstraints {
             $0.top.equalTo(booktitleLabel.snp.bottom).offset(10)
-            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.leading.equalToSuperview().inset(16)
         }
         
         translatorLabel.snp.makeConstraints {
@@ -177,12 +178,12 @@ class DetailViewController: UIViewController {
         
         priceLabel.snp.makeConstraints {
             $0.centerY.equalTo(salePriceLabel.snp.centerY)
-            $0.leading.equalTo(salePriceLabel.snp.trailing).offset(5)
+            $0.leading.equalTo(salePriceLabel.snp.trailing).inset(-5)
             
         }
         
         content.snp.makeConstraints {
-            $0.top.equalTo(salePriceLabel.snp.bottom).offset(10)
+            $0.top.equalTo(salePriceLabel.snp.bottom).offset(20)
             $0.leading.equalToSuperview().offset(16)
         }
         
@@ -197,7 +198,7 @@ class DetailViewController: UIViewController {
     func configureUI() {
         backgroundThumbnail.backgroundColor = .red
         
-        scrollView.backgroundColor = .yellow
+        scrollView.backgroundColor = .red
         
         contentView.backgroundColor = .white
         
@@ -236,7 +237,7 @@ class DetailViewController: UIViewController {
         salePriceLabel.textColor = .black
         
         priceLabel.text = "00000원"
-        priceLabel.font = .systemFont(ofSize: 10, weight: .medium)
+        priceLabel.font = .systemFont(ofSize: 15, weight: .medium)
         priceLabel.textColor = .lightGray
         
         content.text = "책소개"
@@ -249,10 +250,16 @@ class DetailViewController: UIViewController {
         contentLabel.numberOfLines = 0
         
         bottomBar.backgroundColor = .white
-        addButton.backgroundColor = .ybgray
+        addButton.backgroundColor = .ybyellow
         addButton.setTitle("담기", for: .normal)
         addButton.layer.cornerRadius = 6
         addButton.addTarget(self, action: #selector(saveAddBook), for: .touchUpInside)
+        
+        closeButton.addTarget(self, action: #selector(closeDetailVC), for: .touchUpInside)
+    }
+    
+    @objc func closeDetailVC() {
+        self.dismiss(animated: true, completion: nil) // 이전 화면으로 이동
     }
     
     // MARK: Core Data 에 저장
@@ -288,3 +295,10 @@ class DetailViewController: UIViewController {
     
 }
 
+extension String {
+    func strikeThrough() -> NSAttributedString {
+        let attributeString = NSMutableAttributedString(string: self)
+        attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: NSUnderlineStyle.single.rawValue, range: NSMakeRange(0, attributeString.length))
+        return attributeString
+    }
+}
