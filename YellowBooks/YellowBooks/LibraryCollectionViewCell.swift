@@ -74,8 +74,9 @@ class LibraryCollectionViewCell: UICollectionViewCell {
 //        contentView.addSubview(author)
         contentView.addSubview(salePrice)
 //        image.addSubview(likeButton)
-        contentView.addSubview(highLightView)
+        
         contentView.addSubview(highLightBorderView)
+        contentView.addSubview(highLightView)
         
         image.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()

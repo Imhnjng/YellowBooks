@@ -19,25 +19,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         
-        let firstViewController = UINavigationController(rootViewController: MainViewController())
+//        let firstViewController = UINavigationController(rootViewController: MainViewController())
         let SecondViewController = UINavigationController(rootViewController: SearchViewController())
         let ThirdViewController = UINavigationController(rootViewController: LibraryViewController())
         
         let tabBarController = UITabBarController()
-        tabBarController.setViewControllers([firstViewController, SecondViewController, ThirdViewController], animated: true)
+        tabBarController.setViewControllers([SecondViewController, ThirdViewController], animated: true)
         
         if let items = tabBarController.tabBar.items {
-            items[0].selectedImage = UIImage(systemName: "house")
-            items[0].image = UIImage(systemName: "house")
-            items[0].title = "Home"
             
-            items[1].selectedImage = UIImage(systemName: "doc.text.magnifyingglass")
-            items[1].image = UIImage(systemName: "doc.text.magnifyingglass")
-            items[1].title = "Search"
+            items[0].selectedImage = UIImage(systemName: "doc.text.magnifyingglass")
+            items[0].image = UIImage(systemName: "doc.text.magnifyingglass")
+            items[0].title = "Search"
             
-            items[2].selectedImage = UIImage(systemName: "books.vertical")
-            items[2].image = UIImage(systemName: "books.vertical")
-            items[2].title = "Library"
+            items[1].selectedImage = UIImage(systemName: "books.vertical")
+            items[1].image = UIImage(systemName: "books.vertical")
+            items[1].title = "Library"
         }
         
         let tabBarAppearance = UITabBarAppearance()

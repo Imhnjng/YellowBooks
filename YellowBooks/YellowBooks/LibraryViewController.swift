@@ -16,8 +16,6 @@ enum Mode {
 }
 
 class LibraryViewController: UIViewController {
-    // UICollecionView에서 선택한 셀의 IndexPath를 Key로,
-    // 선택 여부를 value로 가지며, 선택한 셀들의 정보를 저장한다.
     var dictionarySelectedIndexPath: [IndexPath : Bool] = [:]
 //    var selectedIndexList: [IndexPath] = []
     
@@ -179,7 +177,7 @@ class LibraryViewController: UIViewController {
         // CoreData 변경사항 저장
         try? context.save()
         
-        // 선택한 셀 제거 후 딕셔너리 초기화
+        // 선택 되지 않는 책만 남김
         bookList = bookList.filter { book in
             let indexPath = IndexPath(item: bookList.firstIndex(of: book)!, section: 0)
             if dictionarySelectedIndexPath[indexPath] == nil {
