@@ -9,8 +9,18 @@ import UIKit
 import SnapKit
 import CoreData
 
+// 편집시 선택모드
+enum Mode {
+    case view
+    case select
+}
+
 class LibraryViewController: UIViewController {
-    //
+    // UICollecionView에서 선택한 셀의 IndexPath를 Key로,
+    // 선택 여부를 value로 가지며, 선택한 셀들의 정보를 저장한다.
+    var dictionarySelectedIndexPath: [IndexPath : Bool] = [:]
+//    var selectedIndexList: [IndexPath] = []
+    
     var persistentContainer: NSPersistentContainer? {
         (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer
     }
@@ -22,7 +32,7 @@ class LibraryViewController: UIViewController {
     let libraryCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.sectionInset = .init(top: 0, left: 16, bottom: 0, right: 16)
+        layout.sectionInset = .init(top: 16, left: 16, bottom: 16, right: 16)
         
         layout.minimumLineSpacing = 8
         layout.minimumInteritemSpacing = 8
@@ -35,8 +45,38 @@ class LibraryViewController: UIViewController {
         
         layout.itemSize = .init(width: cellWidth, height: cellWidth * 2)
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.allowsSelection = false
         return cv
     }()
+    var editButton = UIButton()
+    var trashButton = UIButton()
+    
+    /*선택 모드에서 뷰 모드로 변경할 때,
+     선택한 셀들을 모두 선택 해제하고 선택된 셀의 indexPath를 저장하는 딕셔너리를 비우고,
+     다시 선택할 수 없는 단일 선택 모드로 변경해주는 역할을 한다.*/
+    var editMode: Mode = .view {
+        didSet {
+            switch editMode {
+            // view mode
+            case .view:
+                for (key, value) in dictionarySelectedIndexPath {
+                    if value {
+                        libraryCollectionView.deselectItem(at: key, animated: true)
+                    }
+                }
+                dictionarySelectedIndexPath.removeAll()
+                editButton.setTitle("Edit", for: .normal)
+                editButton.setTitleColor(.ybgray, for: .normal)
+                libraryCollectionView.allowsSelection = false
+                trashButton.isHidden = true
+
+            case .select:
+                editButton.setTitle("Done", for: .normal)
+                trashButton.isHidden = false
+                libraryCollectionView.allowsSelection = true
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,6 +111,8 @@ class LibraryViewController: UIViewController {
         view.addSubview(brandLogoImage)
         view.addSubview(myLibraryLabel)
         view.addSubview(libraryCollectionView)
+        view.addSubview(editButton)
+        view.addSubview(trashButton)
         
         brandLogoImage.snp.makeConstraints {
             $0.top.equalToSuperview().offset(50)
@@ -88,6 +130,16 @@ class LibraryViewController: UIViewController {
             $0.leading.trailing.bottom.equalToSuperview()
         }
         
+        editButton.snp.makeConstraints {
+            $0.centerY.equalTo(myLibraryLabel.snp.centerY)
+            $0.trailing.equalToSuperview().offset(-16)
+        }
+        
+        trashButton.snp.makeConstraints {
+            $0.centerY.equalTo(editButton.snp.centerY)
+            $0.trailing.equalTo(editButton.snp.leading).offset(-5)
+        }
+        
     }
     
     func configureUI() {
@@ -97,8 +149,51 @@ class LibraryViewController: UIViewController {
         
         libraryCollectionView.backgroundColor = .white
         libraryCollectionView.register(LibraryCollectionViewCell.self, forCellWithReuseIdentifier: LibraryCollectionViewCell.identifier)
+        
+        editButton.setTitle("Edit", for: .normal)
+        editButton.setTitleColor(.ybgray, for: .normal)
+        editButton.addTarget(self, action: #selector(EditButton), for: .touchUpInside)
+        
+        trashButton.setTitle("Delect", for: .normal)
+        trashButton.setTitleColor(.red, for: .normal)
+        trashButton.addTarget(self, action: #selector(didSelectDelectButton), for: .touchUpInside)
+        trashButton.isHidden = true
     }
     
+    //편집 -  뷰 모드 변경 토글
+    @objc func EditButton(_ sender: UIButton) {
+        print("편집모드변경 토글")
+        editMode = editMode == .view ? .select : .view
+    }
+    
+    // 삭제
+    @objc func didSelectDelectButton(_ sender: UIButton) {
+        print("삭제버튼")
+        guard let context = self.persistentContainer?.viewContext else { return } //viewVontext 생성
+        
+        // 선택한 셀의 IndexPath를 기반으로 CoreData에서 해당 항목 삭제
+        for (indexPath, _) in dictionarySelectedIndexPath {
+            context.delete(bookList[indexPath.item])
+        }
+        
+        // CoreData 변경사항 저장
+        try? context.save()
+        
+        // 선택한 셀 제거 후 딕셔너리 초기화
+        bookList = bookList.filter { book in
+            let indexPath = IndexPath(item: bookList.firstIndex(of: book)!, section: 0)
+            if dictionarySelectedIndexPath[indexPath] == nil {
+                return true
+            } else {
+                return false
+            }
+        }
+        
+        dictionarySelectedIndexPath.removeAll() // 선택한 셀 제거 후 딕셔너리 초기화
+        libraryCollectionView.reloadData()
+        editMode = .view // 모드를 "뷰"로 변경
+    }
+        
     
 }
 
@@ -113,8 +208,16 @@ extension LibraryViewController: UICollectionViewDelegate, UICollectionViewDataS
         let bookList = bookList[indexPath.item]
         cell.updateData(bookList)
         
-//        libraryCollectionView.reloadData()
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("dictionarySelectedIndexPath: \(dictionarySelectedIndexPath)")
+        dictionarySelectedIndexPath[indexPath] = true
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        // 선택을 해제한 경우 딕셔너리에서 해당 IndexPath 제거
+       dictionarySelectedIndexPath[indexPath] = nil
+    }
 }

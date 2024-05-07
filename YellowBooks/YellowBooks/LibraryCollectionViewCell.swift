@@ -11,19 +11,42 @@ import SnapKit
 class LibraryCollectionViewCell: UICollectionViewCell {
     static let identifier = "LibraryCollectionViewCell"
     
+    
+    
     let image = UIImageView()
     let title = UILabel()
 //    let author = UILabel()
     let salePrice = UILabel()
-    let likeButton: UIButton = {
-        let button = UIButton()
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: 20, weight: .light)
-        let image = UIImage(systemName: "heart", withConfiguration: imageConfig)
-        
-        button.setImage(image, for: .normal)
-        button.tintColor = .white
-        return button
-    }()
+//    let likeButton: UIButton = {
+//        let button = UIButton()
+//        let imageConfig = UIImage.SymbolConfiguration(pointSize: 20, weight: .light)
+//        let image = UIImage(systemName: "heart", withConfiguration: imageConfig)
+//        
+//        button.setImage(image, for: .normal)
+//        button.tintColor = .white
+//        return button
+//    }()
+    
+    let highLightView = UIView()
+    let highLightBorderView = UIView()
+    
+
+    // 편집시 하이라이트
+//    override var isHighlighted: Bool {
+//       didSet {
+//           highLightView.isHidden = !isHighlighted
+//           highLightBorderView.isHidden = !isHighlighted
+//       }
+//   }
+
+   override var isSelected: Bool {
+       didSet {
+//           print("isSelected, \(isSelected)")
+           highLightView.isHidden = !isSelected
+           highLightBorderView.isHidden = !isSelected
+       }
+   }
+
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -50,7 +73,9 @@ class LibraryCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(title)
 //        contentView.addSubview(author)
         contentView.addSubview(salePrice)
-        image.addSubview(likeButton)
+//        image.addSubview(likeButton)
+        contentView.addSubview(highLightView)
+        contentView.addSubview(highLightBorderView)
         
         image.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
@@ -72,6 +97,17 @@ class LibraryCollectionViewCell: UICollectionViewCell {
 //            $0.trailing.bottom.equalToSuperview().inset(8)
 //        }
         
+        highLightView.snp.makeConstraints {
+            $0.top.leading.equalToSuperview().offset(-4)
+            $0.bottom.trailing.equalToSuperview().inset(-4)
+        }
+        
+        highLightBorderView.snp.makeConstraints {
+            $0.top.leading.equalToSuperview().offset(-4)
+            $0.bottom.trailing.equalToSuperview().inset(-4)
+        }
+        
+        contentView.layer.cornerRadius = 6
         image.backgroundColor = .blue
         
         title.text = "title title title title title"
@@ -83,6 +119,14 @@ class LibraryCollectionViewCell: UICollectionViewCell {
         salePrice.numberOfLines = 1
         salePrice.textColor = .ybblack
         salePrice.font = .systemFont(ofSize: 12, weight: .light)
+        
+        highLightView.backgroundColor = .ybyellow
+        highLightView.layer.opacity = 0.3
+        highLightView.layer.cornerRadius = 6
+        highLightView.isHidden = true
+        highLightBorderView.layer.borderColor = UIColor.ybyellow.cgColor
+        highLightBorderView.layer.borderWidth = 3
+        highLightBorderView.layer.cornerRadius = 6
+        highLightBorderView.isHidden = true
     }
-    
 }
