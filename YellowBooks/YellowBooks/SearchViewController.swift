@@ -7,12 +7,14 @@
 
 import UIKit
 import SnapKit
+//import SwiftUI
 
 class SearchViewController: UIViewController {
     let brandLogoImage = UIImageView(image: UIImage(named: "brandLogo"))
     let searchBar = UISearchBar()
     let searchResultLabel = UILabel()
     let tableView = UITableView()
+    let recentlyBookImageView = UIImageView()
     
     var searchBookDocuments: [Document] = []
     
@@ -33,6 +35,7 @@ class SearchViewController: UIViewController {
         view.addSubview(searchBar)
         view.addSubview(searchResultLabel)
         view.addSubview(tableView)
+        view.addSubview(recentlyBookImageView)
         
         brandLogoImage.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(16)
@@ -56,6 +59,12 @@ class SearchViewController: UIViewController {
             $0.top.equalTo(searchResultLabel.snp.bottom).offset(10)
             $0.leading.bottom.trailing.equalToSuperview()
         }
+        
+        recentlyBookImageView.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(25)
+            $0.bottom.equalToSuperview().inset(110)
+            $0.height.width.equalTo(35)
+        }
     }
     
     func configureUI() {
@@ -71,6 +80,11 @@ class SearchViewController: UIViewController {
         searchResultLabel.textColor = .ybblack
         tableView.backgroundColor = .white
         tableView.register(ResultTableViewCell.self, forCellReuseIdentifier: ResultTableViewCell.identifier)
+        
+        recentlyBookImageView.backgroundColor = .gray
+        recentlyBookImageView.layer.cornerRadius = recentlyBookImageView.frame.height/2
+        recentlyBookImageView.layer.borderWidth = 1
+        recentlyBookImageView.clipsToBounds = true
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
@@ -145,3 +159,15 @@ extension SearchViewController: UISearchBarDelegate {
         self.searchBook(keyword: text)
     }
 }
+
+#Preview {
+    SearchViewController()  // 해당 컨트롤러
+  // 화면 업데이트: command+option+p
+}
+
+//struct VCPreView: PreviewProvider {
+//    static var previews: some View {
+//        SearchViewController().toPreview()
+//    }
+//}
+//#endif

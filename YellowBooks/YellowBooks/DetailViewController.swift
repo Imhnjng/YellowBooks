@@ -196,13 +196,13 @@ class DetailViewController: UIViewController {
     }
     
     func configureUI() {
-        backgroundThumbnail.backgroundColor = .orange
+        backgroundThumbnail.backgroundColor = .lightGray
         
-        scrollView.backgroundColor = .red
+        scrollView.backgroundColor = .white
         
         contentView.backgroundColor = .white
         
-        thumnailImage.backgroundColor = .blue
+        thumnailImage.backgroundColor = .gray
         
         infoBackgroundView.backgroundColor = .white
         infoBackgroundView.layer.cornerRadius = 15

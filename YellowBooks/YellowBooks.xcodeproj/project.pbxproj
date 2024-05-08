@@ -21,6 +21,7 @@
 		3C65AC652BE49F4900324D36 /* LibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C65AC642BE49F4900324D36 /* LibraryViewController.swift */; };
 		3C65AC682BE4BAEE00324D36 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3C65AC672BE4BAEE00324D36 /* SnapKit */; };
 		3C65AC6E2BE500FE00324D36 /* ResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C65AC6D2BE500FE00324D36 /* ResultTableViewCell.swift */; };
+		3CDAE6F22BEB4A40003E22C6 /* SwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CDAE6F12BEB4A40003E22C6 /* SwiftUIView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 		3C65AC622BE49EFA00324D36 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		3C65AC642BE49F4900324D36 /* LibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewController.swift; sourceTree = "<group>"; };
 		3C65AC6D2BE500FE00324D36 /* ResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultTableViewCell.swift; sourceTree = "<group>"; };
+		3CDAE6F12BEB4A40003E22C6 /* SwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +88,7 @@
 				3C5E83662BE5F99700C540A9 /* DetailViewController.swift */,
 				3C65AC502BE49B0600324D36 /* Main.storyboard */,
 				3C65AC582BE49B0800324D36 /* LaunchScreen.storyboard */,
+				3CDAE6F12BEB4A40003E22C6 /* SwiftUIView.swift */,
 			);
 			path = YellowBooks;
 			sourceTree = "<group>";
@@ -169,6 +172,7 @@
 			files = (
 				3C65AC632BE49EFA00324D36 /* SearchViewController.swift in Sources */,
 				3C5E83652BE5E61800C540A9 /* LibraryCollectionViewCell.swift in Sources */,
+				3CDAE6F22BEB4A40003E22C6 /* SwiftUIView.swift in Sources */,
 				3C65AC4B2BE49B0600324D36 /* AppDelegate.swift in Sources */,
 				3C65AC552BE49B0600324D36 /* Model.xcdatamodeld in Sources */,
 				3C65AC652BE49F4900324D36 /* LibraryViewController.swift in Sources */,
@@ -336,7 +340,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -369,7 +373,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
