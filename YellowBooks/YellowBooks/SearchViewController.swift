@@ -63,7 +63,7 @@ class SearchViewController: UIViewController {
         recentlyBookImageView.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(25)
             $0.bottom.equalToSuperview().inset(110)
-            $0.height.width.equalTo(35)
+            $0.height.width.equalTo(50)
         }
     }
     
@@ -86,6 +86,7 @@ class SearchViewController: UIViewController {
         recentlyBookImageView.layer.borderWidth = 1
         recentlyBookImageView.layer.borderColor = UIColor.clear.cgColor
         recentlyBookImageView.clipsToBounds = true
+        recentlyBookImageView.contentMode = .scaleAspectFill
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
