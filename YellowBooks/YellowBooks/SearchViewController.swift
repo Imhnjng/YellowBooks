@@ -123,13 +123,9 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource, UISc
         
         let detailVC = DetailViewController()
         detailVC.selectBook = selectBook
-        let navigationController = UINavigationController(rootViewController: detailVC)
-
-        // 모달 뷰 전체 화면으로 설정
-//        navigationController.modalPresentationStyle = .none
 
         // 현재 뷰 컨트롤러에서 모달 방식으로 네비게이션 컨트롤러 표시
-        present(navigationController, animated: true)
+        present(detailVC, animated: true)
         
     }
     

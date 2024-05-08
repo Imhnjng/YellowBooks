@@ -32,7 +32,7 @@ class DetailViewController: UIViewController {
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.backgroundColor = .gray
-        //이미지에 블러 넣기
+//        이미지에 블러 넣기
         let blurEffect = UIBlurEffect(style: .dark)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = imageView.bounds
@@ -196,7 +196,7 @@ class DetailViewController: UIViewController {
     }
     
     func configureUI() {
-        backgroundThumbnail.backgroundColor = .red
+        backgroundThumbnail.backgroundColor = .orange
         
         scrollView.backgroundColor = .red
         
