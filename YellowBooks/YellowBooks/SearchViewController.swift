@@ -15,6 +15,8 @@ class SearchViewController: UIViewController {
     let searchResultLabel = UILabel()
     let tableView = UITableView()
     let recentlyBookImageView = UIImageView()
+    lazy var tapGesture = UITapGestureRecognizer(target: self, action: #selector(clickRecentBook))
+    // 인스터스 프로퍼티는 생성자가 호출되는 시점에 초기화가 된다. 생성이 완료된 상태는 아니어서 self 사용불가. 사용할 시점에 초기화가 이뤄진다
     
     var searchBookDocuments: [Document] = []
     
@@ -81,17 +83,20 @@ class SearchViewController: UIViewController {
         tableView.backgroundColor = .white
         tableView.register(ResultTableViewCell.self, forCellReuseIdentifier: ResultTableViewCell.identifier)
         
-        recentlyBookImageView.backgroundColor = .gray
-        recentlyBookImageView.layer.cornerRadius = recentlyBookImageView.frame.height/2
-        recentlyBookImageView.layer.borderWidth = 1
-        recentlyBookImageView.layer.borderColor = UIColor.clear.cgColor
-        recentlyBookImageView.clipsToBounds = true
+        recentlyBookImageView.backgroundColor = .clear
         recentlyBookImageView.contentMode = .scaleAspectFill
+        recentlyBookImageView.clipsToBounds = true
+        recentlyBookImageView.layer.cornerRadius = 25
+        recentlyBookImageView.isUserInteractionEnabled = true // 이미지뷰 클릭 이벤트 가능하게 해줌
+        recentlyBookImageView.addGestureRecognizer(tapGesture)
+        
     }
+ 
+    
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
         print("touchesBegan")
-        self.view.endEditing(true)
+//        self.view.endEditing(true)
     }
 
     func searchBook(keyword: String) {
@@ -112,6 +117,10 @@ class SearchViewController: UIViewController {
                 
             }
         }
+    }
+    
+    @objc func clickRecentBook() {
+        print(#function)
     }
 }
 
@@ -136,7 +145,6 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource, UISc
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectBook = searchBookDocuments[indexPath.row]
-        
         let detailVC = DetailViewController()
         detailVC.selectBook = selectBook
 
@@ -145,6 +153,17 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource, UISc
         
         recentlyBookImageView.loadFromURL(selectBook.thumbnail)
         
+        if let tabBarController = self.tabBarController,
+            let viewControllers = tabBarController.viewControllers,
+            let navigationController = viewControllers[1] as? UINavigationController,
+            let libraryVC = navigationController.viewControllers[0] as? LibraryViewController {
+            libraryVC.recentlyBookImageView.loadFromURL(selectBook.thumbnail)
+        }
+        
+//        let libraryVC = LibraryViewController() //새로운 인스턴스,,, 기존에 있는건 변함없음,,
+//        libraryVC.recentlyBookImageView.loadFromURL(selectBook.thumbnail)
+        
+//        LibraryViewController.shared.recentlyBookImageView.loadFromURL(selectBook.thumbnail)
     }
     
     // 키보드외 터치 헀을 때 키보드 내려감

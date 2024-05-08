@@ -16,6 +16,9 @@ enum Mode {
 }
 
 class LibraryViewController: UIViewController {
+    static let shared = LibraryViewController()
+//    private init() {}
+    
     var dictionarySelectedIndexPath: [IndexPath : Bool] = [:]
 //    var selectedIndexList: [IndexPath] = []
     
@@ -48,10 +51,8 @@ class LibraryViewController: UIViewController {
     }()
     var editButton = UIButton()
     var trashButton = UIButton()
-    
-    /*선택 모드에서 뷰 모드로 변경할 때,
-     선택한 셀들을 모두 선택 해제하고 선택된 셀의 indexPath를 저장하는 딕셔너리를 비우고,
-     다시 선택할 수 없는 단일 선택 모드로 변경해주는 역할을 한다.*/
+    let recentlyBookImageView = UIImageView()
+ 
     var editMode: Mode = .view {
         didSet {
             switch editMode {
@@ -111,6 +112,7 @@ class LibraryViewController: UIViewController {
         view.addSubview(libraryCollectionView)
         view.addSubview(editButton)
         view.addSubview(trashButton)
+        view.addSubview(recentlyBookImageView)
         
         brandLogoImage.snp.makeConstraints {
             $0.top.equalToSuperview().offset(50)
@@ -138,6 +140,12 @@ class LibraryViewController: UIViewController {
             $0.trailing.equalTo(editButton.snp.leading).offset(-5)
         }
         
+        recentlyBookImageView.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(25)
+            $0.bottom.equalToSuperview().inset(110)
+            $0.height.width.equalTo(50)
+        }
+        
     }
     
     func configureUI() {
@@ -156,6 +164,11 @@ class LibraryViewController: UIViewController {
         trashButton.setTitleColor(.red, for: .normal)
         trashButton.addTarget(self, action: #selector(didSelectDelectButton), for: .touchUpInside)
         trashButton.isHidden = true
+        
+        recentlyBookImageView.backgroundColor = .gray
+        recentlyBookImageView.contentMode = .scaleAspectFill
+        recentlyBookImageView.clipsToBounds = true
+        recentlyBookImageView.layer.cornerRadius = 25
     }
     
     //편집 -  뷰 모드 변경 토글
