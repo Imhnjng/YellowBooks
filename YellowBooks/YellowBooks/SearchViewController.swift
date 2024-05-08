@@ -84,6 +84,7 @@ class SearchViewController: UIViewController {
         recentlyBookImageView.backgroundColor = .gray
         recentlyBookImageView.layer.cornerRadius = recentlyBookImageView.frame.height/2
         recentlyBookImageView.layer.borderWidth = 1
+        recentlyBookImageView.layer.borderColor = UIColor.clear.cgColor
         recentlyBookImageView.clipsToBounds = true
     }
     
@@ -140,6 +141,8 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource, UISc
 
         // 현재 뷰 컨트롤러에서 모달 방식으로 네비게이션 컨트롤러 표시
         present(detailVC, animated: true)
+        
+        recentlyBookImageView.loadFromURL(selectBook.thumbnail)
         
     }
     
