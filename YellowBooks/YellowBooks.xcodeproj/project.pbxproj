@@ -88,10 +88,10 @@
 				3C65AC642BE49F4900324D36 /* LibraryViewController.swift */,
 				3C5E83642BE5E61800C540A9 /* LibraryCollectionViewCell.swift */,
 				3C5E83662BE5F99700C540A9 /* DetailViewController.swift */,
+				3CDAE6F32BEB5F4A003E22C6 /* Extension.swift */,
 				3C65AC502BE49B0600324D36 /* Main.storyboard */,
 				3C65AC582BE49B0800324D36 /* LaunchScreen.storyboard */,
 				3CDAE6F12BEB4A40003E22C6 /* SwiftUIView.swift */,
-				3CDAE6F32BEB5F4A003E22C6 /* Extension.swift */,
 			);
 			path = YellowBooks;
 			sourceTree = "<group>";

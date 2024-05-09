@@ -16,11 +16,8 @@ enum Mode {
 }
 
 class LibraryViewController: UIViewController {
-    static let shared = LibraryViewController()
-//    private init() {}
     
     var dictionarySelectedIndexPath: [IndexPath : Bool] = [:]
-//    var selectedIndexList: [IndexPath] = []
     
     var persistentContainer: NSPersistentContainer? {
         (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer
@@ -29,6 +26,7 @@ class LibraryViewController: UIViewController {
     
     let brandLogoImage = UIImageView(image: UIImage(named: "brandLogo"))
     let myLibraryLabel = UILabel()
+    let delectAllButton = UIButton()
    
     let libraryCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -50,7 +48,7 @@ class LibraryViewController: UIViewController {
         return cv
     }()
     var editButton = UIButton()
-    var trashButton = UIButton()
+    var delectButton = UIButton()
     let recentlyBookImageView = UIImageView()
  
     var editMode: Mode = .view {
@@ -67,12 +65,15 @@ class LibraryViewController: UIViewController {
                 editButton.setTitle("Edit", for: .normal)
                 editButton.setTitleColor(.ybgray, for: .normal)
                 libraryCollectionView.allowsSelection = false
-                trashButton.isHidden = true
+                delectButton.isHidden = true
+                delectAllButton.isHidden = true
 
             case .select:
                 editButton.setTitle("Done", for: .normal)
-                trashButton.isHidden = false
+                delectButton.isHidden = false
+                delectButton.setImage(UIImage(systemName: "trash"), for: .normal)
                 libraryCollectionView.allowsSelection = true
+                delectAllButton.isHidden = false
             }
         }
     }
@@ -108,10 +109,11 @@ class LibraryViewController: UIViewController {
     
     func setupConstraints() {
         view.addSubview(brandLogoImage)
+        view.addSubview(delectAllButton)
         view.addSubview(myLibraryLabel)
         view.addSubview(libraryCollectionView)
         view.addSubview(editButton)
-        view.addSubview(trashButton)
+        view.addSubview(delectButton)
         view.addSubview(recentlyBookImageView)
         
         brandLogoImage.snp.makeConstraints {
@@ -120,14 +122,14 @@ class LibraryViewController: UIViewController {
             $0.height.width.equalTo(30)
         }
         
-        myLibraryLabel.snp.makeConstraints {
+        delectAllButton.snp.makeConstraints {
             $0.top.equalTo(brandLogoImage.snp.bottom).offset(10)
             $0.leading.equalToSuperview().offset(16)
         }
         
-        libraryCollectionView.snp.makeConstraints {
-            $0.top.equalTo(myLibraryLabel.snp.bottom).offset(10)
-            $0.leading.trailing.bottom.equalToSuperview()
+        myLibraryLabel.snp.makeConstraints {
+            $0.centerX.equalTo(view.snp.centerX)
+            $0.centerY.equalTo(delectAllButton.snp.centerY)
         }
         
         editButton.snp.makeConstraints {
@@ -135,7 +137,12 @@ class LibraryViewController: UIViewController {
             $0.trailing.equalToSuperview().offset(-16)
         }
         
-        trashButton.snp.makeConstraints {
+        libraryCollectionView.snp.makeConstraints {
+            $0.top.equalTo(myLibraryLabel.snp.bottom).offset(10)
+            $0.leading.trailing.bottom.equalToSuperview()
+        }
+        
+        delectButton.snp.makeConstraints {
             $0.centerY.equalTo(editButton.snp.centerY)
             $0.trailing.equalTo(editButton.snp.leading).offset(-5)
         }
@@ -153,6 +160,11 @@ class LibraryViewController: UIViewController {
         myLibraryLabel.textColor = .ybblack
         myLibraryLabel.font = .systemFont(ofSize: 20, weight: .heavy)
         
+        delectAllButton.setTitle("Delect All", for: .normal)
+        delectAllButton.setTitleColor(.ybgray, for: .normal)
+        delectAllButton.addTarget(self, action: #selector(delectAllBooks), for: .touchUpInside)
+        delectAllButton.isHidden = true
+        
         libraryCollectionView.backgroundColor = .white
         libraryCollectionView.register(LibraryCollectionViewCell.self, forCellWithReuseIdentifier: LibraryCollectionViewCell.identifier)
         
@@ -160,10 +172,10 @@ class LibraryViewController: UIViewController {
         editButton.setTitleColor(.ybgray, for: .normal)
         editButton.addTarget(self, action: #selector(EditButton), for: .touchUpInside)
         
-        trashButton.setTitle("Delect", for: .normal)
-        trashButton.setTitleColor(.red, for: .normal)
-        trashButton.addTarget(self, action: #selector(didSelectDelectButton), for: .touchUpInside)
-        trashButton.isHidden = true
+//        delectButton.setTitle("Delect", for: .normal)
+        delectButton.setTitleColor(.red, for: .normal)
+        delectButton.addTarget(self, action: #selector(didSelectDelectButton), for: .touchUpInside)
+        delectButton.isHidden = true
         
         recentlyBookImageView.backgroundColor = .clear
         recentlyBookImageView.contentMode = .scaleAspectFill
@@ -177,10 +189,10 @@ class LibraryViewController: UIViewController {
         editMode = editMode == .view ? .select : .view
     }
     
-    // 삭제
+    // 선택 삭제
     @objc func didSelectDelectButton(_ sender: UIButton) {
         print("삭제버튼")
-        guard let context = self.persistentContainer?.viewContext else { return } //viewVontext 생성
+        guard let context = self.persistentContainer?.viewContext else { return } //viewContext 생성
         
         // 선택한 셀의 IndexPath를 기반으로 CoreData에서 해당 항목 삭제
         for (indexPath, _) in dictionarySelectedIndexPath {
@@ -204,7 +216,11 @@ class LibraryViewController: UIViewController {
         libraryCollectionView.reloadData()
         editMode = .view // 모드를 "뷰"로 변경
     }
-        
+    
+    // 전체 삭제
+    @objc func delectAllBooks() {
+        print("전체삭제")
+    }
     
 }
 

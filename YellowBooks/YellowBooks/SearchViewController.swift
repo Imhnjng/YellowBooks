@@ -122,6 +122,7 @@ class SearchViewController: UIViewController, DetailViewDelegate {
     
     @objc func clickRecentBook() {
         print(#function)
+        
     }
     
     func addBookalert(message: String) {
