@@ -9,7 +9,8 @@ import UIKit
 import SnapKit
 //import SwiftUI
 
-class SearchViewController: UIViewController {
+class SearchViewController: UIViewController, DetailViewDelegate {
+    
     let brandLogoImage = UIImageView(image: UIImage(named: "brandLogo"))
     let searchBar = UISearchBar()
     let searchResultLabel = UILabel()
@@ -96,7 +97,7 @@ class SearchViewController: UIViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
         print("touchesBegan")
-//        self.view.endEditing(true)
+        self.view.endEditing(true)
     }
 
     func searchBook(keyword: String) {
@@ -121,6 +122,13 @@ class SearchViewController: UIViewController {
     
     @objc func clickRecentBook() {
         print(#function)
+    }
+    
+    func addBookalert(message: String) {
+        let alertVC = UIAlertController(title: "책 담기 완료!", message: " \(message)이(가) 라이브러리에 담겼습니다.", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
+        alertVC.addAction(okAction)
+        present(alertVC, animated: true, completion: nil)
     }
 }
 
@@ -150,7 +158,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource, UISc
 
         // 현재 뷰 컨트롤러에서 모달 방식으로 네비게이션 컨트롤러 표시
         present(detailVC, animated: true)
-        
+        detailVC.delegate = self // 담기 눌렀을 때 delegate 위임
         recentlyBookImageView.loadFromURL(selectBook.thumbnail)
         
         if let tabBarController = self.tabBarController,

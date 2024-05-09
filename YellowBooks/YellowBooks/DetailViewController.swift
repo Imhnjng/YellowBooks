@@ -9,9 +9,13 @@ import UIKit
 import SnapKit
 import CoreData
 
+protocol DetailViewDelegate {
+    func addBookalert(message: String)
+}
+
 class DetailViewController: UIViewController {
     
-    //
+    var delegate: DetailViewDelegate?
     var persistentContainer: NSPersistentContainer? {
         (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer
     }
@@ -274,6 +278,7 @@ class DetailViewController: UIViewController {
 //        addBook.author = selectBook.authors
         try? context.save()
         self.dismiss(animated: true, completion: nil) // 이전 화면으로 이동
+        delegate?.addBookalert(message: addBook.title ?? "")
     }
     
     // MARK: load data

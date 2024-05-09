@@ -165,7 +165,7 @@ class LibraryViewController: UIViewController {
         trashButton.addTarget(self, action: #selector(didSelectDelectButton), for: .touchUpInside)
         trashButton.isHidden = true
         
-        recentlyBookImageView.backgroundColor = .gray
+        recentlyBookImageView.backgroundColor = .clear
         recentlyBookImageView.contentMode = .scaleAspectFill
         recentlyBookImageView.clipsToBounds = true
         recentlyBookImageView.layer.cornerRadius = 25
