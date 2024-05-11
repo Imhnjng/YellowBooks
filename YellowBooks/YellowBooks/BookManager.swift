@@ -17,7 +17,7 @@ class BookManager {
     let url = "https://dapi.kakao.com/v3/search/book"
     let apiKey = "acd94dbb68d7d1b322b148d90e258d03"
     
-    func fetchBookData(withQuery query: String, targets: [SearchBookTarget] = [], completion: @escaping (Bool, SearchBookResponse?) -> Void) {
+    func fetchBookData(withQuery query: String, targets: [SearchBookTarget] = [], page: Int = 1, completion: @escaping (Bool, SearchBookResponse?) -> Void) {
         
         guard var urlComponents = URLComponents(string: url) else {
             print("Invalid URL")
@@ -26,6 +26,8 @@ class BookManager {
         var queryItems: [URLQueryItem] = [
 //            URLQueryItem(name: "target", value: "title"),
             URLQueryItem(name: "query", value: query),
+            URLQueryItem(name: "page", value: String(page)),
+            URLQueryItem(name: "size", value: "50"),
         ]
         // target 값 있을시 실행
         if !targets.isEmpty {

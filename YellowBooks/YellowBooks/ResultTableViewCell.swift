@@ -102,6 +102,7 @@ class ResultTableViewCell: UITableViewCell {
         title.text = data.title
         author.text = data.authors.joined(separator: ", ")
         salePrice.text = String((data.salePrice).formatted(.currency(code: "KRW")))
+        image.image = nil
         image.loadFromURL(data.thumbnail)
     }
     

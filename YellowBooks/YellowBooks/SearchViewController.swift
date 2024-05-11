@@ -20,6 +20,10 @@ class SearchViewController: UIViewController, DetailViewDelegate {
     // 인스터스 프로퍼티는 생성자가 호출되는 시점에 초기화가 된다. 생성이 완료된 상태는 아니어서 self 사용불가. 사용할 시점에 초기화가 이뤄진다
     
     var searchBookDocuments: [Document] = []
+    var searchKeyword: String?
+    var searchPage: Int = 1
+    var searchLoading: Bool = false
+    var searchIsEnd: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -102,13 +106,37 @@ class SearchViewController: UIViewController, DetailViewDelegate {
 
     func searchBook(keyword: String) {
         print("searchBook \(keyword)")
-        // api 통신
-        BookManager.shared.fetchBookData(withQuery: keyword, targets: [.title, .person]) { [weak self] success, response in
-            if success, let response = response {
+        
+        // 초기화
+        self.searchPage = 0
+        self.searchKeyword = keyword
+        self.searchIsEnd = false
+        self.searchBookDocuments = []
+        
+        moreLoad()
+    }
+    
+    func moreLoad() {
+        print("moreLoad @@@@@@")
+        
+        guard let searchKeyword = self.searchKeyword else { return }
+        
+        if self.searchLoading { return }
+        if self.searchIsEnd { return }
+        
+        self.searchPage += 1
+        self.searchLoading = true
+        print("moreLoad \(self.searchPage)")
+        
+        BookManager.shared.fetchBookData(withQuery: searchKeyword, targets: [.title, .person], page: self.searchPage) { [weak self] success, response in
+            if success, let response = response, let searchBookDocuments = self?.searchBookDocuments {
 //                print("response: \(response)")
+                print("response.meta.isEnd: \(response.meta.isEnd)")
+                
+                self?.searchIsEnd = response.meta.isEnd
                 
                 // 결과값 모델
-                self?.searchBookDocuments = response.documents
+                self?.searchBookDocuments = searchBookDocuments + response.documents
                 
                 // 테이블뷰 리로드
                 self?.tableView.reloadData()
@@ -117,6 +145,8 @@ class SearchViewController: UIViewController, DetailViewDelegate {
                 // TODO: error UI
                 
             }
+            self?.searchLoading = false
+            print("moreLoad completed \(self?.searchPage)")
         }
     }
     
@@ -166,19 +196,33 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource, UISc
             let viewControllers = tabBarController.viewControllers,
             let navigationController = viewControllers[1] as? UINavigationController,
             let libraryVC = navigationController.viewControllers[0] as? LibraryViewController {
-            libraryVC.recentlyBookImageView.loadFromURL(selectBook.thumbnail)
+//            libraryVC.recentlyBookImageView.loadFromURL(selectBook.thumbnail)
         }
         
-//        let libraryVC = LibraryViewController() //새로운 인스턴스,,, 기존에 있는건 변함없음,,
-//        libraryVC.recentlyBookImageView.loadFromURL(selectBook.thumbnail)
-        
-//        LibraryViewController.shared.recentlyBookImageView.loadFromURL(selectBook.thumbnail)
+        NotificationCenter.default.post(name: Notification.Name("RECENTLY_BOOK_CHANGED"), object: nil, userInfo: ["book": selectBook])
+  
     }
     
     // 키보드외 터치 헀을 때 키보드 내려감
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         print("scrollViewWillBeginDragging")
         self.view.endEditing(true)
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        print("scroll \(scrollView.contentSize.height) \(scrollView.bounds.size.height) \(scrollView.contentOffset.y) \(scrollView.adjustedContentInset) \(scrollView.safeAreaInsets)")
+        
+        let scrollOffset = scrollView.contentOffset.y // 현재 위치
+        let scrollHeight = scrollView.bounds.size.height - scrollView.safeAreaInsets.bottom //스크롤 가능 높이
+        let contentsSizeHeight = scrollView.contentSize.height // 콘텐츠 전체 높이
+        
+//        let scrollPercent = scrollOffset / (contentsSizeHeight - scrollHeight)
+        //print("scrollPercent: \(scrollPercent)")
+        let scrollOffsetFromBottom = (contentsSizeHeight - scrollHeight) - scrollOffset
+//        print("scrollOffsetFromBottom: \(scrollOffsetFromBottom)")
+        if scrollOffsetFromBottom <= 250 {
+            self.moreLoad()
+        }
     }
 }
 

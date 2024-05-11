@@ -78,7 +78,12 @@ class LibraryViewController: UIViewController {
         }
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     override func viewDidLoad() {
+        print("LibraryViewController viewDidLoad @@@@@@@@@@@@@@@@")
         super.viewDidLoad()
         view.backgroundColor = .white
         libraryCollectionView.delegate = self
@@ -88,12 +93,21 @@ class LibraryViewController: UIViewController {
         setupConstraints()
         configureUI()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(onRecentlyBookChanged(_:)), name: Notification.Name("RECENTLY_BOOK_CHANGED"), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print(#function)
         setBookList()
+    }
+    
+    @objc func onRecentlyBookChanged(_ noti: Notification) {
+        print("onRecentlyBookChanged \(noti)")
+        if let book = noti.userInfo?["book"] as? Document {
+            print("thumbnail: \(book.thumbnail)")
+            recentlyBookImageView.loadFromURL(book.thumbnail)
+        }
     }
     
     

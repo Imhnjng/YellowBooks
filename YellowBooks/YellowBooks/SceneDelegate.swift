@@ -23,6 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let SecondViewController = UINavigationController(rootViewController: SearchViewController())
         let ThirdViewController = UINavigationController(rootViewController: LibraryViewController())
         
+        
         let tabBarController = UITabBarController()
         tabBarController.setViewControllers([SecondViewController, ThirdViewController], animated: true)
         
@@ -63,6 +64,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.rootViewController = tabBarController
 //        window?.rootViewController = DetailViewController()
         window?.makeKeyAndVisible()
+        
+//        let view = UIView(frame: CGRectMake(0, 0, 100, 100))
+//        view.backgroundColor = .red
+//        tabBarController.view.addSubview(view)
         
     }
 
